@@ -13,5 +13,5 @@
 </script>
 
 <style>
-  @import '../src/assets/styles/core'
+  @import '../src/public/styles/core'
 </style>
