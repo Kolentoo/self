@@ -1,27 +1,58 @@
-import urllib.request
-import re
-import os
-import urllib
-#根据给定的网址来获取网页详细信息，得到的html就是网页的源代码  
-def getHtml(url):
-    page = urllib.request.urlopen(url)
-    html = page.read()
-    return html.decode('UTF-8')
- 
-def getImg(html):
-    reg = r'src="(.+?\.jpg)"'
-    imgre = re.compile(reg)
-    imglist = imgre.findall(html)#表示在整个网页中过滤出所有图片的地址，放在imglist中
-    x = 0
-    path = 'f:\\python\\pics'  
-    # 将图片保存到D:\\test文件夹中，如果没有test文件夹则创建
-    if not os.path.isdir(path):  
-        os.makedirs(path)  
-    paths = path+'\\'      #保存在test路径下  
- 
-    for imgurl in imglist:  
-        urllib.request.urlretrieve(imgurl,'{}{}.jpg'.format(paths,x))  #打开imglist中保存的图片网址，并下载图片保存在本地，format格式化字符串 
-        x = x + 1  
-    return imglist
-html = getHtml("https://www.bilibili.com/")#获取该网址网页详细信息，得到的html就是网页的源代码  
-print (getImg(html)) #从网页源代码中分析并下载保存图片   
+import requests
+from pyquery import PyQuery as pq
+import json
+import argparse
+
+
+class Video(object):
+    def __init__(self,name,see,intro):
+        self.name=name
+        self.see=see
+        self.intro=intro
+
+    def __str__(self):
+        return '''
+        名称:{}
+        播放量:{}
+        简介:{}
+        '''.format(self.name,self.see,self.intro)
+
+
+class bilibili(object):
+    recent_url = "https://bangumi.bilibili.com/api/timeline_v2_global"  # 最近更新
+    detail_url = "https://bangumi.bilibili.com/anime/{season_id}"
+
+    def __init__(self):
+        self.dom=pq(requests.get('https://bangumi.bilibili.com/22/').text)
+
+    def get_recent(self,num):
+        # '''最近更新'''
+        items=json.loads(requests.get(self.recent_url).text)['result']
+        videos=[]
+        for i in items:
+            name=i['title']
+            link=self.detail_url.format(season_id=i['season_id'])
+            d=pq(requests.get(url=link).text)
+            see = d(".info-count .info-count-item").eq(1).find('em').text()
+            intro = d('.info-desc-wrp').find('.info-desc').text()
+            videos.append(Video(name=name,see=see,intro=intro))
+        if num==0:
+            for item in videos:
+                print(item)
+        else:
+            for item in videos[:num]:
+                print(item)
+
+
+if __name__ == '__main__':
+    parser=argparse.ArgumentParser()
+    parser.add_argument('--recent',help="get the recent info",action="store_true")
+    parser.add_argument('--num',help="The number of results returned,default show all",type=int,default=0)
+    parser.add_argument('-v','--version',help="show version",action="store_true")
+    args=parser.parse_args()
+
+    if args.version:
+        print("bilibili 1.0")
+    elif args.recent:
+       b = bilibili()
+       b.get_recent(args.num)

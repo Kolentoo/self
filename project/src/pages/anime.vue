@@ -1,26 +1,26 @@
 <template>
     <div class="anime">
-        
+        <div class="anime-section anime-new">
+            <showpart :animenew="animenew"></showpart>
+        </div>
+
     </div>
 </template>
 
 <script>
+    import showpart from '../components/show'
     export default{
         data(){
             return{
-                anime1:''
+                animenew:''
             }
         },
         created(){
-            this.$.ajax({
-                type: "GET",
-                url: "https://api.bilibili.com/x/web-interface/ranking/region?jsonp=jsonp&day=3&rid=32",
-                data: {},
-                dataType: "json",
-                success: (data)=>{
-                    console.log(data)
-                }
-            })
+
+
+        },
+        components:{
+            showpart
         }
     }
 </script>

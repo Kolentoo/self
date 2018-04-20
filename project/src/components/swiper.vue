@@ -2,7 +2,7 @@
   <swiper :options="swiperOption" ref="mySwiper" :class="['sbox',{swiperon:swiperon}]">
     <!-- slides -->
     <swiper-slide ref="slides" :class="['swiper-slide','slide'+idx]" v-for="(item,idx) in nums" :key="idx">
-        <div class="mask">
+        <div class="mask" @click="go(item.title)">
             <div class="stitle">
                 <p class="p1">{{item.title}}</p>
                 <p class="p2">{{item.num}}</p>
@@ -50,6 +50,11 @@
             let bHeight = document.documentElement.clientHeight;
         })
         // this.swiper.slideTo(3, 1000, false)
+    },
+    methods:{
+      go(target){
+        this.$router.push(target)
+      }
     }
   }
 </script>
