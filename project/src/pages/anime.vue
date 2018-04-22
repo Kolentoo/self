@@ -26,5 +26,5 @@
 </script>
 
 <style>
-    
+    .anime {padding:0 3%;}
 </style>

@@ -2,9 +2,12 @@
   <swiper :options="swiperOption" ref="mySwiper" :class="['showbox']" v-if="seen">
     <!-- slides -->
     <swiper-slide ref="slides" :class="['swiper-slide']" v-for="(item,idx) in animenew" :key="idx">
-        <img class="show-pic vm" :src="item.cover" alt="">
+        <div class="chart">
+          <img class="show-pic vm g10" :src="item.cover_url" alt="">
+        </div>
         <p class="name">{{item.title}}</p>
-        <p class="update">更新:{{item.lastupdate_at}}</p>
+        <p class="type">{{item.types}}</p>
+        <p class="score">评分:{{item.score}}</p>
     </swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination hide"  slot="pagination"></div>
@@ -23,21 +26,24 @@
         seen:false,
         swiperOption: {
             slidesPerView: 2,
-            slidesPerGroup: 2
+            slidesPerGroup: 2,
+            spaceBetween: 30
         }
-      }
+      } 
     },
     created(){
-        this.$axios.get(`http://xkolento.cn/api/timeline_v2_global`,{
+        let snimeTop = localStorage.getItem('animeTop');
+        this.$axios.get(`http://localhost:3000/chart/top_list`,{
             params:{}
         }).then(res=>{
-            this.animenew=res.data.result.slice(0,9);
+            this.animenew=res.data;
+            localStorage.setItem('animeTop', this.animenew);
             setTimeout(()=> {
                 this.seen=true
             }, 200);
-            
             console.log(this.animenew)
         })
+
     },
     mounted(){      
     },
@@ -51,8 +57,12 @@
 
 <style scoped>
     .showbox {padding:3rem 0;}
-    .showbox .swiper-slide {width: 45%;text-align: center;}
+    .swiper-wrapper {padding:0 2%;}
+    .showbox .swiper-slide {text-align: center;}
     .showbox .show-pic {border-radius:0.8rem;margin-bottom: 0.8rem;}
-    .showbox .name {font-size: 3.2rem;max-height:9.5rem;overflow: hidden;}
-    .showbox .update {font-size: 2.8rem;}
+    .showbox .chart {height: 45rem;overflow: hidden;}
+    .showbox .chart img{height: 100%;}
+    .showbox .name {font-size: 3rem;max-height:9.5rem;overflow: hidden;margin-top: 0.5rem;}
+    .showbox .type {font-size: 2.6rem;}
+    .showbox .score {font-size: 2.6rem;}
 </style>
