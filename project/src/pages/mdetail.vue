@@ -66,17 +66,20 @@
         </div>
         <div class="actor">
             <h2>演员</h2>
-            <ul class="actor-con clearfix">
-                <li class="actor-list fl" v-for="(item,idx) in detail.casts" :key="idx">
-                    <img class="actor-pic vm" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
-                    <p class="actor-name">{{item.name}}</p>
-                </li>
-            </ul>
+            <div class="wrapper" ref="wrapper">
+                <ul class="actor-con clearfix content" ref="content">
+                    <li class="actor-list fl" v-for="(item,idx) in detail.casts" :key="idx">
+                        <img class="actor-pic vm" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
+                        <p class="actor-name">{{item.name}}</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import BScroll from 'better-scroll'
     export default{
         data(){
             return{
@@ -86,7 +89,8 @@
                     },
                     rating:{
                         average:''
-                    }
+                    },
+                    casts:[]
                 }
             }
         },
@@ -98,7 +102,6 @@
             
             if(detailgroup){
                 let mdetail = JSON.parse(detailgroup);
-                console.log(mdetail)
                 this.detail=mdetail
             }else{
                 this.$.ajax({
@@ -108,15 +111,27 @@
                         this.detail=res;
                         let mdetail = JSON.stringify(res)
                         localStorage.setItem(mid, mdetail);
-                        console.log(this.detail)
                     }
                 })
             }
+        },
+        mounted(){
+            let content = this.$refs.content;
+            let wrapper = this.$refs.wrapper;
+            let clength = this.detail.casts.length;
+            content.style.width=25*clength+'rem'
+            let scroll = new BScroll(wrapper,{
+                startX:0,
+                scrollX:true,
+                scrollY:false,
+                momentum:false
+            })
         }
     }
 </script>
 
 <style scoped>
+    body,html {width: 100%;overflow-x:hidden; }
     .mbox {background:rgb(30,29,35);}
     .mbanner {display:flex;justify-content: center;align-items: center;}
     .mbanner .mpic {width: 75%;max-height:70rem;padding:2rem 0 5rem 0;}
@@ -126,7 +141,8 @@
     .minfo {width: 65%;}
     .minfo .name {font-size: 4rem;font-weight:bold;}
     .minfo .normal {font-size: 2.8rem;}
-    .evaluate {width: 16rem;height: 16rem;padding:1.5rem;box-shadow:0 0 1rem rgba(0,0,0,0.08);text-align: center;margin:2rem 0 0 0;}
+    .evaluate {width: 16rem;height: 16rem;padding:1.5rem;box-shadow:0 0 1rem rgba(0,0,0,0.08);text-align: center;margin:2rem 0 0 0;
+    border-radius:1rem;}
     .evaluate .p1 {color:#666;font-size: 2.4rem;}
     .evaluate .score {font-size: 3.8rem;}
     .evaluate .member {font-size: 2.4rem;margin-top: 0.7rem;}
@@ -156,10 +172,10 @@
     .mstory {padding:2rem;}
     .mstory h2{color:#aaa;font-size: 3.2rem;}
     .mstory .p1 {font-size: 2.8rem;margin-top: 1.5rem;}
-    .actor {padding: 2rem;}
+    .actor {margin: 2rem;overflow: hidden;}
     .actor h2{color:#aaa;font-size: 3.2rem;}
-    .actor .actor-con {width: 100%;overflow: scroll;margin-top: 1.5rem;white-space: nowrap;}
-    .actor .actor-list {text-align: center;width: 20rem;margin-right: 3%;white-space: nowrap;}
-    .actor .actor-list img{width: 100%;}
+    .actor .actor-con {width: 150%;overflow: scroll;margin-top: 1.5rem;white-space: nowrap;}
+    .actor .actor-list {text-align: center;width: 22rem;margin-right: 3rem;white-space: nowrap;}
+    .actor .actor-list img{width: 100%;border-radius:1rem;}
     .actor .actor-name {color:#333;font-size: 2.8rem;margin-top: 0.5rem;}
 </style>

@@ -75,7 +75,7 @@
           }, 200);
           console.log(animeJson)
         }else{
-          this.$axios.get(`http://localhost:3000/chart/top_list`,{
+          this.$axios.get(`http://xkolento.cn/chart/top_list`,{
               params:{}
           }).then(res=>{
               this.animenew=res.data;

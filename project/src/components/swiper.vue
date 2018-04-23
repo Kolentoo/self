@@ -24,7 +24,7 @@
       return {
         nums:[
             {title:'MOVIES',num:'01'},
-            {title:'ANIME',num:'02'},
+            {title:'ALLTYPE',num:'02'},
             {title:'BOOKS',num:'03'}
         ],
         swiperon:false,

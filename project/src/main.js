@@ -7,6 +7,7 @@ import axios from 'axios'
 import Vuex from 'Vuex'
 import $ from 'jquery'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import BScroll from 'better-scroll'
 import 'swiper/dist/css/swiper.css'
 
 
