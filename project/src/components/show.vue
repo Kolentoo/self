@@ -1,61 +1,143 @@
 <template>
-  <swiper :options="swiperOption" ref="mySwiper" :class="['showbox']" v-if="seen">
-    <!-- slides -->
-    <swiper-slide ref="slides" :class="['swiper-slide']" v-for="(item,idx) in animenew" :key="idx">
+  <div class="swiper-box">
+    <swiper :options="swiperOption" ref="mySwiper" :class="['showbox']" v-if="seen">
+      <!-- slides -->
+      <swiper-slide ref="slides" :class="['swiper-slide']" v-for="(item,idx) in movietype" :key="idx">
+          <div class="chart" @click="godetail(item.id)">
+            <img class="show-pic vm g10" :src="item.cover_url?'https://images.weserv.nl/?url='+item.cover_url.substring(7):'https://images.weserv.nl/?url='+item.images.small.substring(7)" alt="">
+          </div>
+          <p class="name">{{item.title}}</p>
+          <div class="score">
+
+            <div class="score-box" v-if="item.score">
+              <div v-if="item.score >= 9">
+                <div class="star10"></div>
+              </div>
+              <div v-else-if="item.score >= 8 && item.score <9">
+                <div class="star9"></div>
+              </div>
+              <div v-else-if="item.score >= 7 && item.score <8">
+                <div class="star8"></div>
+              </div>
+              <div v-else-if="item.score >= 6 && item.score <7">
+                <div class="star7"></div>
+              </div>
+              <div v-else-if="item.score >= 5 && item.score <6">
+                <div class="star6"></div>
+              </div>
+              <div v-else-if="item.score >= 4 && item.score <5">
+                <div class="star5"></div>
+              </div>
+              <div v-else-if="item.score >= 3 && item.score <4">
+                <div class="star4"></div>
+              </div>
+              <div v-else-if="item.score >= 2 && item.score <3">
+                <div class="star3"></div>
+              </div>
+              <div v-else-if="item.score >= 1 && item.score <0">
+                <div class="star2"></div>
+              </div>
+              <div v-else>
+                <div class="star1"></div>
+              </div>
+            </div>
+
+            <div class="score-box" v-if="item.rating.average">
+              <div v-if="item.rating.average >= 9">
+                <div class="star10"></div>
+              </div>
+              <div v-else-if="item.rating.average >= 8 && item.rating.average <9">
+                <div class="star9"></div>
+              </div>
+              <div v-else-if="item.rating.average >= 7 && item.rating.average <8">
+                <div class="star8"></div>
+              </div>
+              <div v-else-if="item.rating.average >= 6 && item.rating.average <7">
+                <div class="star7"></div>
+              </div>
+              <div v-else-if="item.rating.average >= 5 && item.rating.average <6">
+                <div class="star6"></div>
+              </div>
+              <div v-else-if="item.rating.average >= 4 && item.rating.average <5">
+                <div class="star5"></div>
+              </div>
+              <div v-else-if="item.rating.average >= 3 && item.rating.average <4">
+                <div class="star4"></div>
+              </div>
+              <div v-else-if="item.rating.average >= 2 && item.rating.average <3">
+                <div class="star3"></div>
+              </div>
+              <div v-else-if="item.rating.average >= 1 && item.rating.average <0">
+                <div class="star2"></div>
+              </div>
+              <div v-else>
+                <div class="star1"></div>
+              </div>
+            </div>
+            
+            <p class="score-num" v-if="item.score">{{item.score}}</p>
+            <p class="score-num" v-if="item.rating.average">{{item.rating.average}}</p>
+          </div>
+
+      </swiper-slide> 
+
+      <!--<swiper-slide ref="slides" :class="['swiper-slide']" v-for="(item,idx) in movietype" :key="idx" v-if="hot">
         <div class="chart" @click="godetail(item.id)">
-          <img class="show-pic vm g10" :src="item.cover_url" alt="">
+          <img class="show-pic vm g10" :src="item.images.large?'https://images.weserv.nl/?url='+item.images.large.substring(7):'bbbbbbb'">
         </div>
         <p class="name">{{item.title}}</p>
         <div class="score">
 
-            <div v-if="item.score >= 9">
+          <div class="score-box">
+            <div v-if="item.rating.average >= 9">
               <div class="star10"></div>
             </div>
-            <div v-else-if="item.score >= 8 && item.score <9">
+            <div v-else-if="item.rating.average >= 8 && item.rating.average <9">
               <div class="star9"></div>
             </div>
-            <div v-else-if="item.score >= 7 && item.score <8">
+            <div v-else-if="item.rating.average >= 7 && item.rating.average <8">
               <div class="star8"></div>
             </div>
-            <div v-else-if="item.score >= 6 && item.score <7">
+            <div v-else-if="item.rating.average >= 6 && item.rating.average <7">
               <div class="star7"></div>
             </div>
-            <div v-else-if="item.score >= 5 && item.score <6">
+            <div v-else-if="item.rating.average >= 5 && item.rating.average <6">
               <div class="star6"></div>
             </div>
-            <div v-else-if="item.score >= 4 && item.score <5">
+            <div v-else-if="item.rating.average >= 4 && item.rating.average <5">
               <div class="star5"></div>
             </div>
-            <div v-else-if="item.score >= 3 && item.score <4">
+            <div v-else-if="item.rating.average >= 3 && item.rating.average <4">
               <div class="star4"></div>
             </div>
-            <div v-else-if="item.score >= 2 && item.score <3">
+            <div v-else-if="item.rating.average >= 2 && item.rating.average <3">
               <div class="star3"></div>
             </div>
-            <div v-else-if="item.score >= 1 && item.score <0">
+            <div v-else-if="item.rating.average >= 1 && item.rating.average <0">
               <div class="star2"></div>
             </div>
             <div v-else>
               <div class="star1"></div>
             </div>
+          </div>
           
-          <p class="score-num">{{item.score}}</p>
+          <p class="score-num" >{{item.rating.average}}</p>
         </div>
-    </swiper-slide> 
-    <!-- Optional controls -->
-    <div class="swiper-pagination hide"  slot="pagination"></div>
-    <div class="swiper-button-prev hide" slot="button-prev"></div>
-    <div class="swiper-button-next hide" slot="button-next"></div>
-    <div class="swiper-scrollbar hide" slot="scrollbar"></div>
-  </swiper>
+      </swiper-slide> -->
+      <div class="swiper-pagination hide"  slot="pagination"></div>
+      <div class="swiper-button-prev hide" slot="button-prev"></div>
+      <div class="swiper-button-next hide" slot="button-next"></div>
+      <div class="swiper-scrollbar hide" slot="scrollbar"></div>
+    </swiper>
+  </div>
 </template>
 
 <script>
   export default {
     name: 'carrousel',
+    props:['movietype','hot'],
     data() {
       return {
-        animenew:[],
         starnum:'',
         seen:false,
         swiperOption: {
@@ -66,31 +148,12 @@
       } 
     },
     created(){
-        let anime1 = localStorage.getItem('anime1');
-        if(anime1){
-          let animeJson = JSON.parse(anime1)
-          this.animenew = animeJson
-          setTimeout(()=> {
-              this.seen=true
-          }, 200);
-          console.log(animeJson)
-        }else{
-          this.$axios.get(`http://xkolento.cn/chart/top_list`,{
-              params:{}
-          }).then(res=>{
-              this.animenew=res.data;
-              let anime1 = JSON.stringify(res.data)
-              localStorage.setItem('anime1', anime1);
-              setTimeout(()=> {
-                  this.seen=true
-              }, 200);
-          })
-        }
-
+    },
+    mounted(){
+      this.seen=true
     },
     methods:{
       godetail(mid){
-        console.log(1)
         this.$router.push(`mdetail?mid=${mid}`);
       }
     },
@@ -104,7 +167,6 @@
 
 <style scoped>
     .showbox {padding:1rem 0;}
-    .swiper-wrapper {padding:0 2%;}
     .showbox .swiper-slide {text-align: center;}
     .showbox .show-pic {border-radius:0.8rem;margin-bottom: 0.8rem;}
     .showbox .chart {height: 45rem;overflow: hidden;}

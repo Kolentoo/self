@@ -2,7 +2,7 @@
     <div class="moviedetail">
         <div class="mbox">
             <div class="mtop">
-                <img class="back" src="../public/images/back.png" alt="">
+                <img class="back" src="../public/images/back.png" alt="" @click="goback()">
                 <p class="mtitle">电影</p>
                 <img class="share" src="../public/images/share.png" alt="">
             </div>
@@ -75,6 +75,15 @@
                 </ul>
             </div>
         </div>
+        <div class="director">
+            <h2>导演</h2>
+            <ul class="director-con clearfix">
+                <li class="d-list tc fl" v-for="(item,idx) in detail.directors" :key="idx">
+                    <img class="director-pic" :src="'https://images.weserv.nl/?url='+item.avatars.large.substring(7)" alt="">
+                    <p class="director-name">{{item.name}}</p>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -90,7 +99,10 @@
                     rating:{
                         average:''
                     },
-                    casts:[]
+                    casts:[],
+                    directors:[
+
+                    ]
                 }
             }
         },
@@ -102,6 +114,7 @@
             
             if(detailgroup){
                 let mdetail = JSON.parse(detailgroup);
+                console.log(mdetail)
                 this.detail=mdetail
             }else{
                 this.$.ajax({
@@ -126,12 +139,17 @@
                 scrollY:false,
                 momentum:false
             })
+        },
+        methods:{
+            goback(){
+                window.history.go(-1);
+            }
         }
     }
 </script>
 
 <style scoped>
-    body,html {width: 100%;overflow-x:hidden; }
+    body,html {width: 100%;overflow-x:hidden;}
     .mbox {background:rgb(30,29,35);}
     .mbanner {display:flex;justify-content: center;align-items: center;}
     .mbanner .mpic {width: 75%;max-height:70rem;padding:2rem 0 5rem 0;}
@@ -172,10 +190,17 @@
     .mstory {padding:2rem;}
     .mstory h2{color:#aaa;font-size: 3.2rem;}
     .mstory .p1 {font-size: 2.8rem;margin-top: 1.5rem;}
+    ::-webkit-scrollbar{width:0px;height:0px;}
     .actor {margin: 2rem;overflow: hidden;}
     .actor h2{color:#aaa;font-size: 3.2rem;}
     .actor .actor-con {width: 150%;overflow: scroll;margin-top: 1.5rem;white-space: nowrap;}
     .actor .actor-list {text-align: center;width: 22rem;margin-right: 3rem;white-space: nowrap;}
     .actor .actor-list img{width: 100%;border-radius:1rem;}
     .actor .actor-name {color:#333;font-size: 2.8rem;margin-top: 0.5rem;}
+    .director {margin: 4rem 2rem 2rem;}
+    .director h2{color:#aaa;font-size: 3.2rem;}
+    .director .director-con {margin-top: 1.5rem;}
+    .director .d-list {text-align: center;width: 22rem;margin-right: 3rem;}
+    .director .d-list img{width: 100%;border-radius:1rem;}
+    .director .director-name {color:#333;font-size: 2.8rem;margin-top: 0.5rem;}
 </style>

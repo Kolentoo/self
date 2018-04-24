@@ -25,7 +25,9 @@
         nums:[
             {title:'MOVIES',num:'01'},
             {title:'ALLTYPE',num:'02'},
-            {title:'BOOKS',num:'03'}
+            {title:'ANIME',num:'03'},
+            {title:'BOOKS',num:'04'},
+            {title:'ABOUT ME',num:'05'}
         ],
         swiperon:false,
         swiperOption: {
@@ -71,5 +73,7 @@
     .stitle .p2 {font-size: 3.8rem;}
     .slide0 {background: url('../public/images/bj16.jpg') no-repeat center center;background-size: cover;}
     .slide1 {background: url('../public/images/bj11.jpg') no-repeat center center;background-size: cover;}
-    .slide2 {background: url('../public/images/bj13.jpg') no-repeat center center;background-size: cover;}
+    .slide2 {background: url('../public/images/bj14.jpg') no-repeat center center;background-size: cover;}
+    .slide3 {background: url('../public/images/bj13.jpg') no-repeat center center;background-size: cover;}
+    .slide4 {background: url('../public/images/bj12.jpg') no-repeat center center;background-size: cover;}
 </style>
