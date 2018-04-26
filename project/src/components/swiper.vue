@@ -2,12 +2,15 @@
   <swiper :options="swiperOption" ref="mySwiper" :class="['sbox',{swiperon:swiperon}]">
     <!-- slides -->
     <swiper-slide ref="slides" :class="['swiper-slide','slide'+idx]" v-for="(item,idx) in nums" :key="idx">
-        <div class="mask" @click="go(item.title)">
+        <div class="mask" @click="go(item.title)" @touchstart="playvideo(idx)" @touchend="endvideo()">
             <div class="stitle">
                 <p class="p1">{{item.title}}</p>
                 <p class="p2">{{item.num}}</p>
             </div>
         </div>
+        <video v-if="longtap" preload autoplay class="videobox" :id="['video'+idx]" webkit-playsinline>
+          <source :src="item.video">
+        </video>
     </swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
@@ -23,18 +26,19 @@
     data() {
       return {
         nums:[
-            {title:'MOVIES',num:'01'},
-            {title:'ALLTYPE',num:'02'},
-            {title:'ANIME',num:'03'},
-            {title:'BOOKS',num:'04'},
-            {title:'ABOUT ME',num:'05'}
+            {title:'MOVIES',num:'01',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Bonne-Marque-ld.mp4'},
+            {title:'TVPLAY',num:'02',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Involve-Digital-ld.mp4'},
+            {title:'ANIME',num:'03',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Hunter-Farmer-ld.mp4'}
+            // {title:'ABOUT ME',num:'04'}
         ],
         swiperon:false,
         swiperOption: {
           // some swiper options/callbacks
           // 所有的参数同 swiper 官方 api 参数
           // ...
-        }
+        },
+        longtap:false,
+        fullscreen:false
       }
     },
     computed: {
@@ -43,9 +47,16 @@
       }
     },
     created(){
+      let myDate = new Date();
+      let day = myDate.getDate();
+      let firstday = localStorage.getItem('today')
+      if(firstday==day){
+        this.swiperon=true
+      }else{
         setTimeout(()=> {
             this.swiperon=true
-        }, 2200);
+        }, 4000);
+      }
     },
     mounted() {
         this.$nextTick(()=>{
@@ -56,6 +67,14 @@
     methods:{
       go(target){
         this.$router.push(target)
+      },
+      playvideo(idx){
+        setTimeout(()=> {
+          this.longtap=true
+        }, 300);
+      },
+      endvideo(){
+          // this.longtap=false
       }
     }
   }
@@ -76,4 +95,9 @@
     .slide2 {background: url('../public/images/bj14.jpg') no-repeat center center;background-size: cover;}
     .slide3 {background: url('../public/images/bj13.jpg') no-repeat center center;background-size: cover;}
     .slide4 {background: url('../public/images/bj12.jpg') no-repeat center center;background-size: cover;}
+    .videobox {width: 100%;position: fixed;top: 0;left: 0;height: 100%;}
+    .videobox:-webkit-full-screen {
+      width: 100%;
+      height: 100%;
+    }
 </style>

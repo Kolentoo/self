@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import index from '../pages/index'
-import alltype from '../pages/alltype'
+import tvplay from '../pages/tvplay'
 import movies from '../pages/movies'
 import anime from '../pages/anime'
 import mdetail from '../pages/mdetail'
@@ -16,9 +16,9 @@ export default new Router({
       component: index
     },
     {
-      path: '/alltype',
-      name: 'alltype',
-      component: alltype
+      path: '/tvplay',
+      name: 'tvplay',
+      component: tvplay
     },
     {
       path: '/mdetail',

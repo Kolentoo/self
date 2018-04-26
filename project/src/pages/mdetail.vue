@@ -7,7 +7,7 @@
                 <img class="share" src="../public/images/share.png" alt="">
             </div>
             <div class="mbanner">
-                <img class="mpic vm" :src="detail.images.large" alt="">
+                <img class="mpic vm" :src="detail.images.large-0!=0?detail.images.large:'../public/images/K.jpg'" alt="">
             </div>
         </div>
         <div class="mcontent">
@@ -64,30 +64,36 @@
                 {{detail.summary}}
             </p>
         </div>
-        <div class="actor">
+        <div class="actor" v-if="detail.casts.length!=0">
             <h2>演员</h2>
-            <div class="wrapper" ref="wrapper">
-                <ul class="actor-con clearfix content" ref="content">
+            <div class="wrapper" ref="wrapper1">
+                <ul class="actor-con clearfix content" ref="content1">
                     <li class="actor-list fl" v-for="(item,idx) in detail.casts" :key="idx">
-                        <img class="actor-pic vm" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
+                        <img class="actor-pic vm" v-if="item.avatars-0!=0" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
+                        <img class="actor-pic vm" v-if="item.avatars-0===0" src="../public/images/K.jpg" alt="">
                         <p class="actor-name">{{item.name}}</p>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="director">
+        <div class="actor" v-if="detail.directors.length!=0">
             <h2>导演</h2>
-            <ul class="director-con clearfix">
-                <li class="d-list tc fl" v-for="(item,idx) in detail.directors" :key="idx">
-                    <img class="director-pic" :src="'https://images.weserv.nl/?url='+item.avatars.large.substring(7)" alt="">
-                    <p class="director-name">{{item.name}}</p>
-                </li>
-            </ul>
+            <div class="wrapper" ref="wrapper2">
+                <ul class="actor-con clearfix content" ref="content2">
+                    <li class="actor-list fl" v-for="(item,idx) in detail.directors" :key="idx">
+                        <img class="actor-pic vm" v-if="item.avatars-0!=0" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
+                        <img class="actor-pic vm" v-if="item.avatars-0===0" src="../public/images/K.jpg" alt="">
+                        <p class="actor-name">{{item.name}}</p>
+                    </li>
+                </ul>
+            </div>
         </div>
+        <loading v-if="load"></loading>
     </div>
 </template>
 
 <script>
+    import loading from '../components/loading'
     import BScroll from 'better-scroll'
     export default{
         data(){
@@ -99,11 +105,18 @@
                     rating:{
                         average:''
                     },
-                    casts:[],
+                    casts:[
+                        {
+                            avatars:{
+                                small:''
+                            }
+                        }
+                    ],
                     directors:[
 
                     ]
-                }
+                },
+                load:true
             }
         },
         created(){
@@ -116,6 +129,7 @@
                 let mdetail = JSON.parse(detailgroup);
                 console.log(mdetail)
                 this.detail=mdetail
+                this.load=false
             }else{
                 this.$.ajax({
                     url:`https://api.douban.com/v2/movie/subject/${mid}`,
@@ -124,33 +138,60 @@
                         this.detail=res;
                         let mdetail = JSON.stringify(res)
                         localStorage.setItem(mid, mdetail);
+                        this.load=false
                     }
                 })
             }
+            this.$nextTick(()=>{
+                if(this.load===false){
+                
+
+                    if(this.detail.casts.length!=0){
+                        let content1 = this.$refs.content1;
+                        let wrapper1 = this.$refs.wrapper1;
+                        let clength = this.detail.casts.length;
+                        content1.style.width=25*clength+'rem'
+                        let scroll1 = new BScroll(wrapper1,{
+                            startX:0,
+                            scrollX:true,
+                            scrollY:false,
+                            momentum:false
+                        })
+                    }
+
+                    if(this.detail.directors.length!=0){
+                        let content2 = this.$refs.content2;
+                        let wrapper2 = this.$refs.wrapper2;
+                        content2.style.width=25*clength+'rem'
+                        let scroll2 = new BScroll(wrapper2,{
+                            startX:0,
+                            scrollX:true,
+                            scrollY:false,
+                            momentum:false
+                        })
+                    }
+                
+                }
+            })
+
         },
         mounted(){
-            let content = this.$refs.content;
-            let wrapper = this.$refs.wrapper;
-            let clength = this.detail.casts.length;
-            content.style.width=25*clength+'rem'
-            let scroll = new BScroll(wrapper,{
-                startX:0,
-                scrollX:true,
-                scrollY:false,
-                momentum:false
-            })
+
         },
         methods:{
             goback(){
                 window.history.go(-1);
             }
+        },
+        components:{
+            loading
         }
     }
 </script>
 
 <style scoped>
     body,html {width: 100%;overflow-x:hidden;}
-    .mbox {background:rgb(30,29,35);}
+    .mbox {background:rgba(30,29,35,0.75);}
     .mbanner {display:flex;justify-content: center;align-items: center;}
     .mbanner .mpic {width: 75%;max-height:70rem;padding:2rem 0 5rem 0;}
     .mtop {display: flex;justify-content: space-between;color:#fff;font-size: 3rem;padding: 2rem;}

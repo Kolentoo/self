@@ -80,50 +80,6 @@
           </div>
 
       </swiper-slide> 
-
-      <!--<swiper-slide ref="slides" :class="['swiper-slide']" v-for="(item,idx) in movietype" :key="idx" v-if="hot">
-        <div class="chart" @click="godetail(item.id)">
-          <img class="show-pic vm g10" :src="item.images.large?'https://images.weserv.nl/?url='+item.images.large.substring(7):'bbbbbbb'">
-        </div>
-        <p class="name">{{item.title}}</p>
-        <div class="score">
-
-          <div class="score-box">
-            <div v-if="item.rating.average >= 9">
-              <div class="star10"></div>
-            </div>
-            <div v-else-if="item.rating.average >= 8 && item.rating.average <9">
-              <div class="star9"></div>
-            </div>
-            <div v-else-if="item.rating.average >= 7 && item.rating.average <8">
-              <div class="star8"></div>
-            </div>
-            <div v-else-if="item.rating.average >= 6 && item.rating.average <7">
-              <div class="star7"></div>
-            </div>
-            <div v-else-if="item.rating.average >= 5 && item.rating.average <6">
-              <div class="star6"></div>
-            </div>
-            <div v-else-if="item.rating.average >= 4 && item.rating.average <5">
-              <div class="star5"></div>
-            </div>
-            <div v-else-if="item.rating.average >= 3 && item.rating.average <4">
-              <div class="star4"></div>
-            </div>
-            <div v-else-if="item.rating.average >= 2 && item.rating.average <3">
-              <div class="star3"></div>
-            </div>
-            <div v-else-if="item.rating.average >= 1 && item.rating.average <0">
-              <div class="star2"></div>
-            </div>
-            <div v-else>
-              <div class="star1"></div>
-            </div>
-          </div>
-          
-          <p class="score-num" >{{item.rating.average}}</p>
-        </div>
-      </swiper-slide> -->
       <div class="swiper-pagination hide"  slot="pagination"></div>
       <div class="swiper-button-prev hide" slot="button-prev"></div>
       <div class="swiper-button-next hide" slot="button-next"></div>
@@ -135,7 +91,7 @@
 <script>
   export default {
     name: 'carrousel',
-    props:['movietype','hot'],
+    props:['movietype'],
     data() {
       return {
         starnum:'',
