@@ -68,7 +68,7 @@
             <h2>演员</h2>
             <div class="wrapper" ref="wrapper1">
                 <ul class="actor-con clearfix content" ref="content1">
-                    <li class="actor-list fl" v-for="(item,idx) in detail.casts" :key="idx">
+                    <li class="actor-list fl" v-for="(item,idx) in detail.casts" :key="idx" @click="persondetail(item.id)">
                         <img class="actor-pic vm" v-if="item.avatars-0!=0" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
                         <img class="actor-pic vm" v-if="item.avatars-0===0" src="../public/images/K.jpg" alt="">
                         <p class="actor-name">{{item.name}}</p>
@@ -80,7 +80,7 @@
             <h2>导演</h2>
             <div class="wrapper" ref="wrapper2">
                 <ul class="actor-con clearfix content" ref="content2">
-                    <li class="actor-list fl" v-for="(item,idx) in detail.directors" :key="idx">
+                    <li class="actor-list fl" v-for="(item,idx) in detail.directors" :key="idx" @click="persondetail(item.id)">
                         <img class="actor-pic vm" v-if="item.avatars-0!=0" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
                         <img class="actor-pic vm" v-if="item.avatars-0===0" src="../public/images/K.jpg" alt="">
                         <p class="actor-name">{{item.name}}</p>
@@ -144,18 +144,17 @@
             }
             this.$nextTick(()=>{
                 if(this.load===false){
-                
-
+                    let clength = this.detail.casts.length;
                     if(this.detail.casts.length!=0){
                         let content1 = this.$refs.content1;
                         let wrapper1 = this.$refs.wrapper1;
-                        let clength = this.detail.casts.length;
                         content1.style.width=25*clength+'rem'
                         let scroll1 = new BScroll(wrapper1,{
                             startX:0,
                             scrollX:true,
                             scrollY:false,
-                            momentum:false
+                            momentum:false,
+                            click:true
                         })
                     }
 
@@ -167,7 +166,8 @@
                             startX:0,
                             scrollX:true,
                             scrollY:false,
-                            momentum:false
+                            momentum:false,
+                            click:true
                         })
                     }
                 
@@ -175,12 +175,12 @@
             })
 
         },
-        mounted(){
-
-        },
         methods:{
             goback(){
                 window.history.go(-1);
+            },
+            persondetail(pid){
+                this.$router.push(`person?${pid}`)
             }
         },
         components:{

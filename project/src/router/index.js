@@ -5,6 +5,7 @@ import tvplay from '../pages/tvplay'
 import movies from '../pages/movies'
 import anime from '../pages/anime'
 import mdetail from '../pages/mdetail'
+import person from '../pages/person'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/anime',
       name: 'anime',
       component: anime
+    },
+    {
+      path: '/person',
+      name: 'person',
+      component: person
     }
   ]
 })

@@ -37,12 +37,50 @@
             }
         },
         created(){
-            let animenew = localStorage.getItem('animenew');
-            if(animenew){
-                let animenewJson = JSON.parse(animenew)
-                console.log(animenewJson)
-                this.animenew = animenewJson
+            let myDate = new Date();
+            let day = myDate.getDate();
+            let firstday = localStorage.getItem('today')
+            
+            if(firstday!=day){
+                this.animenewapi();
+                this.animehotapi();
+                this.animeniceapi();
             }else{
+                let animenew = localStorage.getItem('animenew');
+                if(animenew){
+                    let animenewJson = JSON.parse(animenew)
+                    console.log(animenewJson)
+                    this.animenew = animenewJson
+                }else{
+                    this.animenewapi();
+                }
+
+                let animehot = localStorage.getItem('animehot');
+                if(animehot){
+                    let animehotJson = JSON.parse(animehot)
+                    console.log(animehotJson)
+                    this.animehot = animehotJson
+                }else{
+                    this.animehotapi();
+                }
+
+                let animenice = localStorage.getItem('animenice');
+                if(animenice){
+                    let animeniceJson = JSON.parse(animenice)
+                    console.log(animeniceJson)
+                    this.animenice = animeniceJson
+                    this.load=false
+                }else{
+                    this.animeniceapi();
+                }
+            }
+
+        },
+        methods:{
+            goback(){
+                window.history.go(-1);
+            },
+            animenewapi(){
                 this.$axios.get(`http://xkolento.cn/anime/new`,{
                     params:{}
                 }).then(res=>{
@@ -50,14 +88,8 @@
                     let animenewstr = JSON.stringify(res.data.subjects)
                     localStorage.setItem('animenew', animenewstr);
                 })
-            }
-
-            let animehot = localStorage.getItem('animehot');
-            if(animehot){
-                let animehotJson = JSON.parse(animehot)
-                console.log(animehotJson)
-                this.animehot = animehotJson
-            }else{
+            },
+            animehotapi(){
                 this.$axios.get(`http://xkolento.cn/anime/hot`,{
                     params:{}
                 }).then(res=>{
@@ -65,15 +97,8 @@
                     let animehotstr = JSON.stringify(res.data.subjects)
                     localStorage.setItem('animehot', animehotstr);
                 })
-            }
-
-            let animenice = localStorage.getItem('animenice');
-            if(animenice){
-                let animeniceJson = JSON.parse(animenice)
-                console.log(animeniceJson)
-                this.animenice = animeniceJson
-                this.load=false
-            }else{
+            },
+            animeniceapi(){
                 this.$axios.get(`http://xkolento.cn/anime/nice`,{
                     params:{}
                 }).then(res=>{
@@ -82,11 +107,6 @@
                     localStorage.setItem('animenice', animenicestr);
                     this.load=false
                 })
-            }
-        },
-        methods:{
-            goback(){
-                window.history.go(-1);
             }
         },
         components:{

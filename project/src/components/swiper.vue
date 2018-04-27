@@ -2,15 +2,14 @@
   <swiper :options="swiperOption" ref="mySwiper" :class="['sbox',{swiperon:swiperon}]">
     <!-- slides -->
     <swiper-slide ref="slides" :class="['swiper-slide','slide'+idx]" v-for="(item,idx) in nums" :key="idx">
-        <div class="mask" @click="go(item.title)" @touchstart="playvideo(idx)" @touchend="endvideo()">
+        <div class="mask" @click="go(item.title)">
             <div class="stitle">
                 <p class="p1">{{item.title}}</p>
                 <p class="p2">{{item.num}}</p>
             </div>
         </div>
-        <video v-if="longtap" preload autoplay class="videobox" :id="['video'+idx]" webkit-playsinline>
-          <source :src="item.video">
-        </video>
+        <input v-model="searchwords" v-if="item.num===''" class="words" type="text" @keyup.enter="search(searchwords)">
+        
     </swiper-slide>
     <!-- Optional controls -->
     <div class="swiper-pagination"  slot="pagination"></div>
@@ -28,7 +27,8 @@
         nums:[
             {title:'MOVIES',num:'01',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Bonne-Marque-ld.mp4'},
             {title:'TVPLAY',num:'02',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Involve-Digital-ld.mp4'},
-            {title:'ANIME',num:'03',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Hunter-Farmer-ld.mp4'}
+            {title:'ANIME',num:'03',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Hunter-Farmer-ld.mp4'},
+            {title:'SEARCH',num:'',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Hunter-Farmer-ld.mp4'}
             // {title:'ABOUT ME',num:'04'}
         ],
         swiperon:false,
@@ -37,8 +37,7 @@
           // 所有的参数同 swiper 官方 api 参数
           // ...
         },
-        longtap:false,
-        fullscreen:false
+        searchwords:''
       }
     },
     computed: {
@@ -68,13 +67,8 @@
       go(target){
         this.$router.push(target)
       },
-      playvideo(idx){
-        setTimeout(()=> {
-          this.longtap=true
-        }, 300);
-      },
-      endvideo(){
-          // this.longtap=false
+      search(swords){
+        
       }
     }
   }
@@ -86,18 +80,17 @@
     .swiper-container {height: 100%;}
     .swiper-slide {width: 100%;}
     .mask {background: rgba(0,0,0,0.1);position: absolute;width: 100%;height: 100%;left: 0;top: 0;display: flex;align-items: center;}
+    .masksearch {align-items:}
     .stitle {color:#fff;text-align: center;width: 100%;font-family: 'druk_pierre_testregular';text-transform: uppercase;
     letter-spacing: 0.8rem;}
     .stitle .p1 {font-size: 5rem;}
     .stitle .p2 {font-size: 3.8rem;}
     .slide0 {background: url('../public/images/bj16.jpg') no-repeat center center;background-size: cover;}
-    .slide1 {background: url('../public/images/bj11.jpg') no-repeat center center;background-size: cover;}
+    .slide1 {background: url('../public/images/bj17.jpg') no-repeat center center;background-size: cover;}
     .slide2 {background: url('../public/images/bj14.jpg') no-repeat center center;background-size: cover;}
     .slide3 {background: url('../public/images/bj13.jpg') no-repeat center center;background-size: cover;}
-    .slide4 {background: url('../public/images/bj12.jpg') no-repeat center center;background-size: cover;}
     .videobox {width: 100%;position: fixed;top: 0;left: 0;height: 100%;}
-    .videobox:-webkit-full-screen {
-      width: 100%;
-      height: 100%;
-    }
+    .videobox:-webkit-full-screen {width: 100%;height: 100%;}
+    .words {width: 50rem;height: 6rem;line-height: 6rem;border-radius:3rem;font-size: 3.2rem;text-align: center;
+    position: absolute;top: 50%;left: 50%;margin:4rem 0 0 -25rem;}
 </style>

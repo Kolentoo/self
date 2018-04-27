@@ -51,8 +51,7 @@
             }  
 
             setTimeout(()=> {
-                          this.enter=true;
-            this.enter=true;  
+                this.enter=true; 
             }, 500);
 
 

@@ -129,12 +129,11 @@
             }
         },
         created(){
-            let now = localStorage.getItem('now');
-            if(now){
-                let nowJson = JSON.parse(now)
-                console.log(nowJson)
-                this.now = nowJson
-            }else{
+            let myDate = new Date();
+            let day = myDate.getDate();
+            let firstday = localStorage.getItem('today')
+
+            if(firstday!=day){
                 this.$axios.get(`http://xkolento.cn/v2/movie/in_theaters`,{
                     params:{}
                 }).then(res=>{
@@ -142,14 +141,7 @@
                     let nowstr = JSON.stringify(res.data.subjects)
                     localStorage.setItem('now', nowstr);
                 })
-            }
 
-            let comeing = localStorage.getItem('comeing');
-            if(comeing){
-                let comeingJson = JSON.parse(comeing)
-                console.log(comeingJson)
-                this.comeing = comeingJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/v2/movie/coming_soon`,{
                     params:{}
                 }).then(res=>{
@@ -157,15 +149,7 @@
                     let comeingstr = JSON.stringify(res.data.subjects)
                     localStorage.setItem('comeing', comeingstr);
                 })
-            }
 
-            let ranking = localStorage.getItem('ranking');
-            if(ranking){
-                let rankingJson = JSON.parse(ranking)
-                console.log(rankingJson)
-                this.ranking = rankingJson
-                this.load=false
-            }else{
                 this.$axios.get(`http://xkolento.cn/v2/movie/top250`,{
                     params:{}
                 }).then(res=>{
@@ -174,14 +158,7 @@
                     localStorage.setItem('ranking', rankingstr);
                     this.load=false
                 })
-            }
 
-            // 分类
-            let anime = localStorage.getItem('anime');
-            if(anime){
-                let animeJson = JSON.parse(anime)
-                this.anime = animeJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_list`,{
                     params:{}
                 }).then(res=>{
@@ -189,13 +166,7 @@
                     let animestr = JSON.stringify(res.data)
                     localStorage.setItem('anime', animestr);
                 })
-            }
 
-            let story = localStorage.getItem('stories');
-            if(story){
-                let storyJson = JSON.parse(story)
-                this.story = storyJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_story`,{
                     params:{}
                 }).then(res=>{
@@ -203,13 +174,7 @@
                     let storystr = JSON.stringify(res.data)
                     localStorage.setItem('stories', storystr);
                 })
-            }
 
-            let happy = localStorage.getItem('happy');
-            if(happy){
-                let happyJson = JSON.parse(happy)
-                this.happy = happyJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_happy`,{
                     params:{}
                 }).then(res=>{
@@ -217,13 +182,7 @@
                     let happystr = JSON.stringify(res.data)
                     localStorage.setItem('happy', happystr);
                 })
-            }
 
-            let act = localStorage.getItem('act');
-            if(act){
-                let actJson = JSON.parse(act)
-                this.act = actJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_act`,{
                     params:{}
                 }).then(res=>{
@@ -231,13 +190,7 @@
                     let actstr = JSON.stringify(res.data)
                     localStorage.setItem('act', actstr);
                 })
-            }
 
-            let love = localStorage.getItem('love');
-            if(love){
-                let loveJson = JSON.parse(love)
-                this.love = loveJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_love`,{
                     params:{}
                 }).then(res=>{
@@ -245,13 +198,7 @@
                     let lovestr = JSON.stringify(res.data)
                     localStorage.setItem('love', lovestr);
                 })
-            }
 
-            let scientist = localStorage.getItem('scientist');
-            if(scientist){
-                let scientistJson = JSON.parse(scientist)
-                this.scientist = scientistJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_scientist`,{
                     params:{}
                 }).then(res=>{
@@ -259,13 +206,7 @@
                     let scientiststr = JSON.stringify(res.data)
                     localStorage.setItem('scientist', scientiststr);
                 })
-            }
 
-            let scare = localStorage.getItem('scare');
-            if(scare){
-                let scareJson = JSON.parse(scare)
-                this.scare = scareJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_scare`,{
                     params:{}
                 }).then(res=>{
@@ -273,13 +214,7 @@
                     let scarestr = JSON.stringify(res.data)
                     localStorage.setItem('scare', scarestr);
                 })
-            }
 
-            let horror = localStorage.getItem('horror');
-            if(horror){
-                let horrorJson = JSON.parse(horror)
-                this.horror = horrorJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_horror`,{
                     params:{}
                 }).then(res=>{
@@ -287,13 +222,7 @@
                     let horrorstr = JSON.stringify(res.data)
                     localStorage.setItem('horror', horrorstr);
                 })
-            }
 
-            let disaster = localStorage.getItem('disaster');
-            if(disaster){
-                let disasterJson = JSON.parse(disaster)
-                this.disaster = disasterJson
-            }else{
                 this.$axios.get(`http://xkolento.cn/chart/top_disaster`,{
                     params:{}
                 }).then(res=>{
@@ -301,7 +230,84 @@
                     let disasterstr = JSON.stringify(res.data)
                     localStorage.setItem('disaster', disasterstr);
                 })
+            }else{
+                let now = localStorage.getItem('now');
+                if(now){
+                    let nowJson = JSON.parse(now)
+                    console.log(nowJson)
+                    this.now = nowJson
+                }
+
+                let comeing = localStorage.getItem('comeing');
+                if(comeing){
+                    let comeingJson = JSON.parse(comeing)
+                    console.log(comeingJson)
+                    this.comeing = comeingJson
+                }
+
+                let ranking = localStorage.getItem('ranking');
+                if(ranking){
+                    let rankingJson = JSON.parse(ranking)
+                    console.log(rankingJson)
+                    this.ranking = rankingJson
+                    this.load=false
+                }
+                
+                let anime = localStorage.getItem('anime');
+                if(anime){
+                    let animeJson = JSON.parse(anime)
+                    this.anime = animeJson
+                }
+
+                let story = localStorage.getItem('stories');
+                if(story){
+                    let storyJson = JSON.parse(story)
+                    this.story = storyJson
+                }
+
+                let happy = localStorage.getItem('happy');
+                if(happy){
+                    let happyJson = JSON.parse(happy)
+                    this.happy = happyJson
+                }
+
+                let act = localStorage.getItem('act');
+                if(act){
+                    let actJson = JSON.parse(act)
+                    this.act = actJson
+                }
+
+                let love = localStorage.getItem('love');
+                if(love){
+                    let loveJson = JSON.parse(love)
+                    this.love = loveJson
+                }
+
+                let scientist = localStorage.getItem('scientist');
+                if(scientist){
+                    let scientistJson = JSON.parse(scientist)
+                    this.scientist = scientistJson
+                }
+
+                let scare = localStorage.getItem('scare');
+                if(scare){
+                    let scareJson = JSON.parse(scare)
+                    this.scare = scareJson
+                }
+
+                let horror = localStorage.getItem('horror');
+                if(horror){
+                    let horrorJson = JSON.parse(horror)
+                    this.horror = horrorJson
+                }
+
+                let disaster = localStorage.getItem('disaster');
+                if(disaster){
+                    let disasterJson = JSON.parse(disaster)
+                    this.disaster = disasterJson
+                }
             }
+
         },
         methods:{
             tab(idx){
