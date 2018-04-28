@@ -4,7 +4,8 @@
       <!-- slides -->
       <swiper-slide ref="slides" :class="['swiper-slide']" v-for="(item,idx) in movietype" :key="idx">
           <div class="chart" @click="godetail(item.id)">
-            <img class="show-pic vm g10" :src="item.cover_url?'https://images.weserv.nl/?url='+item.cover_url.substring(7):'https://images.weserv.nl/?url='+item.images.small.substring(7)" alt="">
+            <img class="show-pic vm g10" v-if="item.images" :src="'https://images.weserv.nl/?url='+item.images.small.substring(7)" alt="">
+            <img class="show-pic vm g10" v-if="item.cover_url" :src="'https://images.weserv.nl/?url='+item.cover_url.substring(7)" alt="">
           </div>
           <p class="name">{{item.title}}</p>
           <div class="score">
@@ -76,7 +77,7 @@
             </div>
             
             <p class="score-num" v-if="item.score">{{item.score}}</p>
-            <p class="score-num" v-if="item.rating.average">{{item.rating.average}}</p>
+            <p class="score-num" v-if="item.rating">{{item.rating.average}}</p>
           </div>
 
       </swiper-slide> 
@@ -124,7 +125,7 @@
 <style scoped>
     .showbox {padding:1rem 0;}
     .showbox .swiper-slide {text-align: center;}
-    .showbox .show-pic {border-radius:0.8rem;margin-bottom: 0.8rem;}
+    .showbox .show-pic {border-radius:0.8rem;margin-bottom: 0.8rem;box-shadow:0 0 1rem rgba(0,0,0,0.1);}
     .showbox .chart {height: 45rem;overflow: hidden;}
     .showbox .chart img{height: 100%;}
     .showbox .name {font-size: 2.8rem;max-height:9.5rem;overflow: hidden;margin: 0.8rem 0 0.5rem 0;}

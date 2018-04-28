@@ -1,69 +1,71 @@
 <template>
     <div class="moviebox">
-        <div class="commonbox">
-            <div class="top">
-                <img class="back" src="../public/images/back.png" alt="" @click="goback()">
-                <p class="mtitle">电影</p>
-                <img class="share" src="../public/images/share.png" alt="">
+        <div class="moviecon">
+            <div class="commonbox">
+                <div class="top">
+                    <img class="back" src="../public/images/back.png" alt="" @click="goback()">
+                    <p class="mtitle">电影</p>
+                    <img class="share" src="../public/images/share.png" alt="">
+                </div>
+                <ul class="nav">
+                    <li :class="['nav-list',{liston:self.liston}]" @click="tab(idx)" v-for="(self,idx) in types" :key="idx">{{self.name}}</li>
+                </ul>
             </div>
-            <ul class="nav">
-                <li :class="['nav-list',{liston:self.liston}]" @click="tab(idx)" v-for="(self,idx) in types" :key="idx">{{self.name}}</li>
-            </ul>
-        </div>
-        <div class="movies" v-if="tabstatus===0">
-            <div class="section">
+            <div class="movies" v-if="tabstatus===0">
+                <div class="section">
+                    <div class="anime-section">
+                        <h2>正在热映</h2>
+                        <showpart :movietype="now"></showpart>
+                    </div>
+                    <div class="anime-section">
+                        <h2>即将上映</h2>
+                        <showpart :movietype="comeing"></showpart>
+                    </div>
+                    <div class="anime-section">
+                        <h2>口碑排行</h2>
+                        <showpart :movietype="ranking"></showpart>
+                    </div>
+                </div>
+            </div>
+            <div class="alltype" v-if="tabstatus===1">
                 <div class="anime-section">
-                    <h2>正在热映</h2>
-                    <showpart :movietype="now"></showpart>
+                    <h2>动漫榜单</h2>
+                    <showpart :movietype="anime" ></showpart>
                 </div>
                 <div class="anime-section">
-                    <h2>即将上映</h2>
-                    <showpart :movietype="comeing"></showpart>
+                    <h2>剧情榜单</h2>
+                    <showpart :movietype="story"></showpart>
                 </div>
                 <div class="anime-section">
-                    <h2>口碑排行</h2>
-                    <showpart :movietype="ranking"></showpart>
+                    <h2>喜剧榜单</h2>
+                    <showpart :movietype="happy"></showpart>
                 </div>
-            </div>
-        </div>
-        <div class="alltype" v-if="tabstatus===1">
-            <div class="anime-section">
-                <h2>动漫榜单</h2>
-                <showpart :movietype="anime" ></showpart>
-            </div>
-            <div class="anime-section">
-                <h2>剧情榜单</h2>
-                <showpart :movietype="story"></showpart>
-            </div>
-            <div class="anime-section">
-                <h2>喜剧榜单</h2>
-                <showpart :movietype="happy"></showpart>
-            </div>
-            <div class="anime-section">
-                <h2>动作榜单</h2>
-                <showpart :movietype="act"></showpart>
-            </div>
-            <div class="anime-section">
-                <h2>爱情榜单</h2>
-                <showpart :movietype="love"></showpart>
-            </div>
-            <div class="anime-section">
-                <h2>科幻榜单</h2>
-                <showpart :movietype="scientist"></showpart>
-            </div>
-            <div class="anime-section">
-                <h2>惊悚榜单</h2>
-                <showpart :movietype="scare"></showpart>
-            </div>
-            <div class="anime-section">
-                <h2>恐怖榜单</h2>
-                <showpart :movietype="horror"></showpart>
-            </div>
-            <div class="anime-section">
-                <h2>灾难榜单</h2>
-                <showpart :movietype="disaster"></showpart>
-            </div>
+                <div class="anime-section">
+                    <h2>动作榜单</h2>
+                    <showpart :movietype="act"></showpart>
+                </div>
+                <div class="anime-section">
+                    <h2>爱情榜单</h2>
+                    <showpart :movietype="love"></showpart>
+                </div>
+                <div class="anime-section">
+                    <h2>科幻榜单</h2>
+                    <showpart :movietype="scientist"></showpart>
+                </div>
+                <div class="anime-section">
+                    <h2>惊悚榜单</h2>
+                    <showpart :movietype="scare"></showpart>
+                </div>
+                <div class="anime-section">
+                    <h2>恐怖榜单</h2>
+                    <showpart :movietype="horror"></showpart>
+                </div>
+                <div class="anime-section">
+                    <h2>灾难榜单</h2>
+                    <showpart :movietype="disaster"></showpart>
+                </div>
 
+            </div>
         </div>
         <loading v-if="load"></loading>
     </div>
@@ -89,7 +91,7 @@
                         average:''
                     }
                 },
-                coming:{
+                comeing:{
                     images:{
                         large:'',
                         small:''

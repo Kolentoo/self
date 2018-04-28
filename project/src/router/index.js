@@ -6,6 +6,7 @@ import movies from '../pages/movies'
 import anime from '../pages/anime'
 import mdetail from '../pages/mdetail'
 import person from '../pages/person'
+import result from '../pages/result'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/person',
       name: 'person',
       component: person
+    },
+    {
+      path: '/result',
+      name: 'result',
+      component: result
     }
   ]
 })

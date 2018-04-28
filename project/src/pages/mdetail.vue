@@ -7,7 +7,7 @@
                 <img class="share" src="../public/images/share.png" alt="">
             </div>
             <div class="mbanner">
-                <img class="mpic vm" :src="detail.images.large-0!=0?detail.images.large:'../public/images/K.jpg'" alt="">
+                <img class="mpic vm" :src="detail.images.large-0!=0?'https://images.weserv.nl/?url='+detail.images.large.substring(7):'../public/images/K.jpg'" alt="">
             </div>
         </div>
         <div class="mcontent">
@@ -153,7 +153,9 @@
                             startX:0,
                             scrollX:true,
                             scrollY:false,
-                            momentum:false,
+                            momentum:true,
+                            swipeTime:1000,
+                            swipeBounceTime:200,
                             click:true
                         })
                     }
@@ -193,7 +195,7 @@
     body,html {width: 100%;overflow-x:hidden;}
     .mbox {background:rgba(30,29,35,0.75);}
     .mbanner {display:flex;justify-content: center;align-items: center;}
-    .mbanner .mpic {width: 75%;max-height:70rem;padding:2rem 0 5rem 0;}
+    .mbanner .mpic {width: 75%;max-height:70rem;margin:2rem 0 5rem 0;box-shadow:0 0 1rem rgba(0,0,0,0.08);border-radius:1rem;}
     .mtop {display: flex;justify-content: space-between;color:#fff;font-size: 3rem;padding: 2rem;}
     .mtop img{width: 3.6rem;height: 3.6rem;}
     .mcontent {padding:2rem;display:flex;justify-content: space-between;margin-top: 2rem;}

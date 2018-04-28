@@ -65,10 +65,10 @@
     },
     methods:{
       go(target){
-        this.$router.push(target)
+        this.$router.push(target);
       },
       search(swords){
-        
+        this.$router.push(`result?${swords}`);
       }
     }
   }

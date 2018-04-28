@@ -255,7 +255,7 @@
                 let firstday = localStorage.getItem('today')
 
                 if(idx===1){
-                    if(firstday==day){
+                    if(firstday!=day){
                         this.americanewapi();
                         this.americahotapi();
                         this.americaniceapi();
