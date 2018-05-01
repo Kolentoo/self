@@ -1,16 +1,16 @@
 <template>
     <div class="moviebox">
-        <div class="moviecon">
-            <div class="commonbox">
-                <div class="top">
-                    <img class="back" src="../public/images/back.png" alt="" @click="goback()">
-                    <p class="mtitle">电影</p>
-                    <img class="share" src="../public/images/share.png" alt="">
-                </div>
-                <ul class="nav">
-                    <li :class="['nav-list',{liston:self.liston}]" @click="tab(idx)" v-for="(self,idx) in types" :key="idx">{{self.name}}</li>
-                </ul>
+        <div class="commonbox">
+            <div class="top">
+                <img class="back" src="../public/images/back.png" alt="" @click="goback()">
+                <p class="mtitle">电影</p>
+                <img class="share opacity" src="../public/images/share.png" alt="">
             </div>
+            <ul class="nav">
+                <li :class="['nav-list',{liston:self.liston}]" @click="tab(idx)" v-for="(self,idx) in types" :key="idx">{{self.name}}</li>
+            </ul>
+        </div>
+        <div class="moviecon">
             <div class="movies" v-if="tabstatus===0">
                 <div class="section">
                     <div class="anime-section">
@@ -136,108 +136,26 @@
             let firstday = localStorage.getItem('today')
 
             if(firstday!=day){
-                this.$axios.get(`http://xkolento.cn/v2/movie/in_theaters`,{
-                    params:{}
-                }).then(res=>{
-                    this.now=res.data.subjects;
-                    let nowstr = JSON.stringify(res.data.subjects)
-                    localStorage.setItem('now', nowstr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/v2/movie/coming_soon`,{
-                    params:{}
-                }).then(res=>{
-                    this.comeing=res.data.subjects;
-                    let comeingstr = JSON.stringify(res.data.subjects)
-                    localStorage.setItem('comeing', comeingstr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/v2/movie/top250`,{
-                    params:{}
-                }).then(res=>{
-                    this.ranking=res.data.subjects;
-                    let rankingstr = JSON.stringify(res.data.subjects)
-                    localStorage.setItem('ranking', rankingstr);
-                    this.load=false
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_list`,{
-                    params:{}
-                }).then(res=>{
-                    this.anime=res.data;
-                    let animestr = JSON.stringify(res.data)
-                    localStorage.setItem('anime', animestr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_story`,{
-                    params:{}
-                }).then(res=>{
-                    this.story=res.data;
-                    let storystr = JSON.stringify(res.data)
-                    localStorage.setItem('stories', storystr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_happy`,{
-                    params:{}
-                }).then(res=>{
-                    this.happy=res.data;
-                    let happystr = JSON.stringify(res.data)
-                    localStorage.setItem('happy', happystr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_act`,{
-                    params:{}
-                }).then(res=>{
-                    this.act=res.data;
-                    let actstr = JSON.stringify(res.data)
-                    localStorage.setItem('act', actstr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_love`,{
-                    params:{}
-                }).then(res=>{
-                    this.love=res.data;
-                    let lovestr = JSON.stringify(res.data)
-                    localStorage.setItem('love', lovestr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_scientist`,{
-                    params:{}
-                }).then(res=>{
-                    this.scientist=res.data;
-                    let scientiststr = JSON.stringify(res.data)
-                    localStorage.setItem('scientist', scientiststr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_scare`,{
-                    params:{}
-                }).then(res=>{
-                    this.scare=res.data;
-                    let scarestr = JSON.stringify(res.data)
-                    localStorage.setItem('scare', scarestr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_horror`,{
-                    params:{}
-                }).then(res=>{
-                    this.horror=res.data;
-                    let horrorstr = JSON.stringify(res.data)
-                    localStorage.setItem('horror', horrorstr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/chart/top_disaster`,{
-                    params:{}
-                }).then(res=>{
-                    this.disaster=res.data;
-                    let disasterstr = JSON.stringify(res.data)
-                    localStorage.setItem('disaster', disasterstr);
-                })
+                this.nowapi();
+                this.comingapi();
+                this.topapi();
+                this.toplistapi();
+                this.topstoryapi();
+                this.tophappyapi();
+                this.topactapi();
+                this.toploveapi();
+                this.topscientistapi();
+                this.topscareapi();
+                this.tophorrorapi();
+                this.topdisasterapi();
             }else{
                 let now = localStorage.getItem('now');
                 if(now){
                     let nowJson = JSON.parse(now)
                     console.log(nowJson)
                     this.now = nowJson
+                }else{
+                    this.nowapi();
                 }
 
                 let comeing = localStorage.getItem('comeing');
@@ -245,6 +163,8 @@
                     let comeingJson = JSON.parse(comeing)
                     console.log(comeingJson)
                     this.comeing = comeingJson
+                }else{
+                    this.comingapi();
                 }
 
                 let ranking = localStorage.getItem('ranking');
@@ -253,60 +173,80 @@
                     console.log(rankingJson)
                     this.ranking = rankingJson
                     this.load=false
+                }else{
+                    this.topapi();
                 }
                 
                 let anime = localStorage.getItem('anime');
                 if(anime){
                     let animeJson = JSON.parse(anime)
                     this.anime = animeJson
+                }else{
+                    this.toplistapi();
                 }
 
                 let story = localStorage.getItem('stories');
                 if(story){
                     let storyJson = JSON.parse(story)
                     this.story = storyJson
+                }else{
+                    this.topstoryapi();
                 }
 
                 let happy = localStorage.getItem('happy');
                 if(happy){
                     let happyJson = JSON.parse(happy)
                     this.happy = happyJson
+                }else{
+                    this.tophappyapi();
                 }
 
                 let act = localStorage.getItem('act');
                 if(act){
                     let actJson = JSON.parse(act)
                     this.act = actJson
+                }else{
+                    this.topactapi();
                 }
 
                 let love = localStorage.getItem('love');
                 if(love){
                     let loveJson = JSON.parse(love)
                     this.love = loveJson
+                }else{
+                    this.toploveapi();
                 }
 
                 let scientist = localStorage.getItem('scientist');
                 if(scientist){
                     let scientistJson = JSON.parse(scientist)
                     this.scientist = scientistJson
+                }else{
+                    this.topscientistapi();
                 }
 
                 let scare = localStorage.getItem('scare');
                 if(scare){
                     let scareJson = JSON.parse(scare)
                     this.scare = scareJson
+                }else{
+                    this.topscareapi();
                 }
 
                 let horror = localStorage.getItem('horror');
                 if(horror){
                     let horrorJson = JSON.parse(horror)
                     this.horror = horrorJson
+                }else{
+                    this.tophorrorapi();
                 }
 
                 let disaster = localStorage.getItem('disaster');
                 if(disaster){
                     let disasterJson = JSON.parse(disaster)
                     this.disaster = disasterJson
+                }else{
+                    this.topdisasterapi();
                 }
             }
 
@@ -324,6 +264,115 @@
             },
             goback(){
                 window.history.go(-1);
+            },
+            nowapi(){
+                this.$axios.get(`http://xkolento.cn/v2/movie/in_theaters`,{
+                    params:{}
+                }).then(res=>{
+                    this.now=res.data.subjects;
+                    let nowstr = JSON.stringify(res.data.subjects)
+                    localStorage.setItem('now', nowstr);
+                })
+            },
+            comingapi(){
+                this.$axios.get(`http://xkolento.cn/v2/movie/coming_soon`,{
+                    params:{}
+                }).then(res=>{
+                    this.comeing=res.data.subjects;
+                    let comeingstr = JSON.stringify(res.data.subjects)
+                    localStorage.setItem('comeing', comeingstr);
+                })
+            },
+            topapi(){
+                this.$axios.get(`http://xkolento.cn/v2/movie/top250`,{
+                    params:{}
+                }).then(res=>{
+                    this.ranking=res.data.subjects;
+                    let rankingstr = JSON.stringify(res.data.subjects)
+                    localStorage.setItem('ranking', rankingstr);
+                    this.load=false
+                })
+            },
+            toplistapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_list`,{
+                    params:{}
+                }).then(res=>{
+                    this.anime=res.data;
+                    let animestr = JSON.stringify(res.data)
+                    localStorage.setItem('anime', animestr);
+                })
+            },
+            topstoryapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_story`,{
+                    params:{}
+                }).then(res=>{
+                    this.story=res.data;
+                    let storystr = JSON.stringify(res.data)
+                    localStorage.setItem('stories', storystr);
+                })
+            },
+            tophappyapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_happy`,{
+                    params:{}
+                }).then(res=>{
+                    this.happy=res.data;
+                    let happystr = JSON.stringify(res.data)
+                    localStorage.setItem('happy', happystr);
+                })
+            },
+            topactapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_act`,{
+                    params:{}
+                }).then(res=>{
+                    this.act=res.data;
+                    let actstr = JSON.stringify(res.data)
+                    localStorage.setItem('act', actstr);
+                })
+            },
+            toploveapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_love`,{
+                    params:{}
+                }).then(res=>{
+                    this.love=res.data;
+                    let lovestr = JSON.stringify(res.data)
+                    localStorage.setItem('love', lovestr);
+                })
+            },
+            topscientistapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_scientist`,{
+                    params:{}
+                }).then(res=>{
+                    this.scientist=res.data;
+                    let scientiststr = JSON.stringify(res.data)
+                    localStorage.setItem('scientist', scientiststr);
+                })
+            },
+            topscareapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_scare`,{
+                    params:{}
+                }).then(res=>{
+                    this.scare=res.data;
+                    let scarestr = JSON.stringify(res.data)
+                    localStorage.setItem('scare', scarestr);
+                })
+            },
+            tophorrorapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_horror`,{
+                    params:{}
+                }).then(res=>{
+                    this.horror=res.data;
+                    let horrorstr = JSON.stringify(res.data)
+                    localStorage.setItem('horror', horrorstr);
+                })
+            },
+            topdisasterapi(){
+                this.$axios.get(`http://xkolento.cn/chart/top_disaster`,{
+                    params:{}
+                }).then(res=>{
+                    this.disaster=res.data;
+                    let disasterstr = JSON.stringify(res.data)
+                    localStorage.setItem('disaster', disasterstr);
+                })
             }
         },
         components:{
@@ -333,8 +382,8 @@
 </script>
 
 <style scoped>
-    .movies {padding:2rem 3%;}
+    .movies {padding:2rem 3%;padding-top: 15rem;}
     .movies h2{font-size: 3rem;}
-    .alltype {padding:2rem 3%;}
+    .alltype {padding:2rem 3%;padding-top: 15rem;}
     .alltype h2{font-size: 3rem;}
 </style>

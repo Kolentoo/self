@@ -4,7 +4,7 @@
             <div class="top">
                 <img class="back" src="../public/images/back.png" alt="" @click="goback()">
                 <p class="mtitle">电视剧</p>
-                <img class="share" src="../public/images/share.png" alt="">
+                <img class="share opacity" src="../public/images/share.png" alt="">
             </div>
             <div class="wrapper" ref="wrapper">
                 <ul class="nav content" ref="content">
@@ -178,36 +178,17 @@
             let day = myDate.getDate();
             let firstday = localStorage.getItem('today')
             if(firstday!=day){
-                this.$axios.get(`http://xkolento.cn/hottv/new`,{
-                    params:{}
-                }).then(res=>{
-                    this.hotnew=res.data.subjects;
-                    let hotnewstr = JSON.stringify(res.data.subjects)
-                    localStorage.setItem('hotnew', hotnewstr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/hottv/hot`,{
-                    params:{}
-                }).then(res=>{
-                    this.hothot=res.data.subjects;
-                    let hothotstr = JSON.stringify(res.data.subjects)
-                    localStorage.setItem('hothot', hothotstr);
-                })
-
-                this.$axios.get(`http://xkolento.cn/hottv/nice`,{
-                    params:{}
-                }).then(res=>{
-                    this.hotnice=res.data.subjects;
-                    let hotnicestr = JSON.stringify(res.data.subjects)
-                    localStorage.setItem('hotnice', hotnicestr);
-                    this.load=false
-                })
+                this.hotnewapi();
+                this.hothotapi();
+                this.hotniceapi();
             }else{
                 let hotnew = localStorage.getItem('hotnew');
                 if(hotnew){
                     let hotnewJson = JSON.parse(hotnew)
                     console.log(hotnewJson)
                     this.hotnew = hotnewJson
+                }else{
+                    this.hotnewapi();
                 }
 
                 let hothot = localStorage.getItem('hothot');
@@ -215,6 +196,8 @@
                     let hothotJson = JSON.parse(hothot)
                     console.log(hothotJson)
                     this.hothot = hothotJson
+                }else{
+                    this.hothotapi();
                 }
 
                 let hotnice = localStorage.getItem('hotnice');
@@ -223,6 +206,8 @@
                     console.log(hotniceJson)
                     this.hotnice = hotniceJson
                     this.load=false
+                }else{
+                    this.hotniceapi();
                 }
             }
 
@@ -502,6 +487,34 @@
             goback(){
                 window.history.go(-1);
             },
+            hotnewapi(){
+                this.$axios.get(`http://xkolento.cn/hottv/new`,{
+                    params:{}
+                }).then(res=>{
+                    this.hotnew=res.data.subjects;
+                    let hotnewstr = JSON.stringify(res.data.subjects)
+                    localStorage.setItem('hotnew', hotnewstr);
+                })
+            },
+            hothotapi(){
+                this.$axios.get(`http://xkolento.cn/hottv/hot`,{
+                    params:{}
+                }).then(res=>{
+                    this.hothot=res.data.subjects;
+                    let hothotstr = JSON.stringify(res.data.subjects)
+                    localStorage.setItem('hothot', hothotstr);
+                })
+            },
+            hotniceapi(){
+                this.$axios.get(`http://xkolento.cn/hottv/nice`,{
+                    params:{}
+                }).then(res=>{
+                    this.hotnice=res.data.subjects;
+                    let hotnicestr = JSON.stringify(res.data.subjects)
+                    localStorage.setItem('hotnice', hotnicestr);
+                    this.load=false
+                })
+            },
             americanewapi(){
                 this.$axios.get(`http://xkolento.cn/america/new`,{
                     params:{}
@@ -706,7 +719,7 @@
 </script>
 
 <style scoped>
-    .tvcon {padding:2rem 3%;}
+    .tvcon {padding:2rem 3%;margin-top: 15rem;}
     .tvcon h2{font-size: 3rem;}
     ::-webkit-scrollbar{width:0px;height:0px;}
 </style>

@@ -3,7 +3,7 @@
         <div class="mbox">
             <div class="mtop">
                 <img class="back" src="../public/images/back.png" alt="" @click="goback()">
-                <p class="mtitle">电影</p>
+                <p class="mtitle">{{detail.title}}</p>
                 <img class="share" src="../public/images/share.png" alt="">
             </div>
             <div class="mbanner">
@@ -89,12 +89,14 @@
             </div>
         </div>
         <loading v-if="load"></loading>
+        <pop :popmsg="popmsg" :popshow="popshow"></pop>
     </div>
 </template>
 
 <script>
     import loading from '../components/loading'
     import BScroll from 'better-scroll'
+    import pop from '../components/pop'
     export default{
         data(){
             return{
@@ -116,7 +118,11 @@
 
                     ]
                 },
-                load:true
+                scroll1:'',
+                scroll2:'', 
+                load:true,
+                popmsg:'',
+                popshow:false
             }
         },
         created(){
@@ -125,31 +131,21 @@
             let mid = midgroup.split('=')[1];
             let detailgroup = localStorage.getItem(mid);
             
-            if(detailgroup){
-                let mdetail = JSON.parse(detailgroup);
-                console.log(mdetail)
-                this.detail=mdetail
-                this.load=false
-            }else{
-                this.$.ajax({
-                    url:`https://api.douban.com/v2/movie/subject/${mid}`,
-                    dataType:'jsonp',
-                    success:(res)=>{
-                        this.detail=res;
-                        let mdetail = JSON.stringify(res)
-                        localStorage.setItem(mid, mdetail);
-                        this.load=false
-                    }
-                })
-            }
             this.$nextTick(()=>{
-                if(this.load===false){
+                this.$axios.get(`http://xkolento.cn/v2/movie/subject/${mid}`,{
+
+                }).then(res=>{
+                    this.detail=res.data;
+                    let mdetail = JSON.stringify(res)
+                    localStorage.setItem(mid, mdetail);
+                    this.load=false
+                }).then(()=>{
                     let clength = this.detail.casts.length;
                     if(this.detail.casts.length!=0){
                         let content1 = this.$refs.content1;
                         let wrapper1 = this.$refs.wrapper1;
                         content1.style.width=25*clength+'rem'
-                        let scroll1 = new BScroll(wrapper1,{
+                        this.scroll1 = new BScroll(wrapper1,{
                             startX:0,
                             scrollX:true,
                             scrollY:false,
@@ -158,13 +154,14 @@
                             swipeBounceTime:200,
                             click:true
                         })
+                        
                     }
 
                     if(this.detail.directors.length!=0){
                         let content2 = this.$refs.content2;
                         let wrapper2 = this.$refs.wrapper2;
                         content2.style.width=25*clength+'rem'
-                        let scroll2 = new BScroll(wrapper2,{
+                        this.scroll2 = new BScroll(wrapper2,{
                             startX:0,
                             scrollX:true,
                             scrollY:false,
@@ -172,8 +169,7 @@
                             click:true
                         })
                     }
-                
-                }
+                })
             })
 
         },
@@ -182,11 +178,20 @@
                 window.history.go(-1);
             },
             persondetail(pid){
-                this.$router.push(`person?${pid}`)
+                if(pid-0!=0){
+                    this.$router.push(`person?${pid}`)
+                }else{
+                    this.popshow=true
+                    this.popmsg='信息不足'
+                    setTimeout(()=> {
+                        this.popshow=false
+                    }, 2500);
+                }
+                
             }
         },
         components:{
-            loading
+            loading,pop
         }
     }
 </script>

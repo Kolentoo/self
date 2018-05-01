@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>KOLENTO</title>
+    <link rel="stylesheet" href="http://m.dfth.com/web/styles/core.css">
     <style>
       
       .kolento,html{background: #fff;padding-bottom: 4rem;width: 100%;height: 100%;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
       .pf {font-family: PingFangTC-Light, sans-serif;}
       .sy {font-family: 'Source Han Sans CN';}
       .anime-section .swiper-wrapper {height: 57rem;}
-      
-      .commonbox {background:rgb(116,123,128);margin-bottom: 2rem;}
+      .opacity {opacity: 0;}
+      .commonbox {background:rgb(116,123,128);margin-bottom: 2rem;position: fixed;width: 100%;top: 0;left: 0;z-index:700;}
       .share {z-index:-1;}
       .top {display: flex;justify-content: space-between;color:#fff;font-size: 3rem;padding: 2rem;}
       .top img{width: 3.6rem;height: 3.6rem;}
@@ -20,13 +21,14 @@
       .nav .liston {background:rgb(83,87,90);}
 
       *{
-        -webkit-touch-callout:none; /*系统默认菜单被禁用*/
-        -webkit-user-select:none; /*webkit浏览器*/
-        -khtml-user-select:none; /*早期浏览器*/
-        -moz-user-select:none;/*火狐*/
-        -ms-user-select:none; /*IE10*/
-        user-select:none;
+        -webkit-touch-callout:auto; /*系统默认菜单被禁用*/
+        -webkit-user-select:auto; /*webkit浏览器*/
+        -khtml-user-select:auto; /*早期浏览器*/
+        -moz-user-select:auto;/*火狐*/
+        -ms-user-select:auto; /*IE10*/
+        user-select:auto;
       }
+      
     </style>
     <script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(normal,e,t){var a=e||10,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=normal?1:1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=normal?"50px": a/2*s*n+"px"},e.exports=t["default"]}]);  flex(false,10, 1);</script>
   </head>

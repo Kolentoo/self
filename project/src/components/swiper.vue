@@ -8,7 +8,7 @@
                 <p class="p2">{{item.num}}</p>
             </div>
         </div>
-        <input v-model="searchwords" v-if="item.num===''" class="words" type="text" @keyup.enter="search(searchwords)">
+        <input v-model="searchwords" placeholder="KEYWORDS" v-if="item.num===''" class="words" type="text" @keyup.enter="search(searchwords)">
         
     </swiper-slide>
     <!-- Optional controls -->
@@ -65,10 +65,14 @@
     },
     methods:{
       go(target){
-        this.$router.push(target);
+        if(target!='SEARCH'){
+          this.$router.push(target);
+        }
       },
       search(swords){
-        this.$router.push(`result?${swords}`);
+        if(this.searchwords!=''){
+          this.$router.push(`search?${swords}`);
+        }
       }
     }
   }
@@ -92,5 +96,5 @@
     .videobox {width: 100%;position: fixed;top: 0;left: 0;height: 100%;}
     .videobox:-webkit-full-screen {width: 100%;height: 100%;}
     .words {width: 50rem;height: 6rem;line-height: 6rem;border-radius:3rem;font-size: 3.2rem;text-align: center;
-    position: absolute;top: 50%;left: 50%;margin:4rem 0 0 -25rem;}
+    position: absolute;top: 50%;left: 50%;margin:4rem 0 0 -25rem;z-index:300;color:#333;}
 </style>

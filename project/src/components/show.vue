@@ -43,7 +43,7 @@
               </div>
             </div>
 
-            <div class="score-box" v-if="item.rating.average">
+            <div class="score-box" v-if="item.subtype">
               <div v-if="item.rating.average >= 9">
                 <div class="star10"></div>
               </div>
@@ -77,7 +77,7 @@
             </div>
             
             <p class="score-num" v-if="item.score">{{item.score}}</p>
-            <p class="score-num" v-if="item.rating">{{item.rating.average}}</p>
+            <p class="score-num" v-if="item.subtype">{{item.rating.average}}</p>
           </div>
 
       </swiper-slide> 
@@ -127,7 +127,7 @@
     .showbox .swiper-slide {text-align: center;}
     .showbox .show-pic {border-radius:0.8rem;margin-bottom: 0.8rem;box-shadow:0 0 1rem rgba(0,0,0,0.1);}
     .showbox .chart {height: 45rem;overflow: hidden;}
-    .showbox .chart img{height: 100%;}
+    .showbox .chart img{height: 100%;box-shadow:0 0 1rem rgba(0,0,0,0.1);}
     .showbox .name {font-size: 2.8rem;max-height:9.5rem;overflow: hidden;margin: 0.8rem 0 0.5rem 0;}
     .showbox .type {font-size: 2.6rem;}
     .showbox .score {font-size: 2.6rem;display: flex;justify-content: center;}

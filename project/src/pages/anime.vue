@@ -4,7 +4,7 @@
             <div class="top">
                 <img class="back" src="../public/images/back.png" alt="" @click="goback()">
                 <p class="mtitle">动漫</p>
-                <img class="share" src="../public/images/share.png" alt="">
+                <img class="share opacity" src="../public/images/share.png" alt="">
             </div>
         </div>
         <div class="anime">
@@ -117,6 +117,6 @@
 
 <style scope>
     .share {z-index:-1;}
-    .anime {padding:2rem 3%;}
+    .anime {padding:2rem 3%;margin-top: 10rem;}
     .anime h2{font-size: 3rem;}
 </style>

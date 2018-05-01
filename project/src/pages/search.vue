@@ -1,16 +1,16 @@
 <template>
     <div class="result">
-        <div class="result-con">
-            <div class="search-box clearfix">
-                <div class="input-box fl">
-                    <input v-model="swords" class="search block" type="text" placeholder="请输入关键字" @keyup.enter="searchwords(swords)">
-                </div>
-                <img class="search-icon" src="../public/images/search.png" alt="">
-                <p class="cancel fr">取消</p>
+        <div class="search-box clearfix">
+            <div class="input-box fl">
+                <input v-model="swords" class="search block" type="text" placeholder="请输入关键字" @keyup.enter="searchwords(swords)">
             </div>
+            <img class="search-icon" src="../public/images/search.png" alt="">
+            <p class="cancel fr" @click="goindex()">取消</p>
+        </div>
+        <div class="result-con">
             <div class="wrapper" ref="wrapper">
-                <div class="content" ref="scon">
-                    <h2><i>{{searchtitle}}</i> <em>共 {{searchcounts}} 条</em></h2>
+                <div class="content" ref="content">
+                    <h2 class="search-title"><i>{{searchtitle}}</i> <em>共 {{searchcounts}} 条</em></h2>
                     <ul class="search-con">
                         <li class="search-list" v-for="(slist,idx) in searchresult" :key="idx" @click="moredetail(slist.id)">
                             <img class="work-pic fl" :src="'https://images.weserv.nl/?url='+slist.images.large.substring(7)" alt="">
@@ -22,7 +22,7 @@
                                     <em class="types" v-for="(item,idx) in slist.genres" :key="idx">{{item}} </em>
                                 </p>
                                 <p class="comment-num">{{slist.collect_count}} 人评价</p>
-                                <div class="score-box clearfix">
+                                <div class="score-box clearfix" v-if="slist.rating">
                                     <div class="score fl">
                                         <div v-if="slist.rating.average >= 9">
                                             <div class="star10"></div>
@@ -60,12 +60,11 @@
                             </div>
                         </li>
                     </ul>
+                    <div class="more-loading tc" v-show="moreload">
+                        <img class="more-pic" src="../public/images/loading2.gif" alt="">
+                    </div>
                 </div>
             </div>
-            <div class="more-loading tc">
-                <img class="more-pic" src="../public/images/loading2.gif" alt="">
-            </div>
-        
         </div>
         <loading v-if="load"></loading>
     </div>
@@ -104,54 +103,111 @@
                 searchcounts:'',
                 searchtitle:'',
                 load:true,
-                swords:''
+                swords:'',
+                keywords:'',
+                scroll:'',
+                moreload:false,
+                all:[],
+                resultarray:[],
+                length:0
             }
         },
         created(){
-            let curl = window.location.href;
-            let keywords = curl.split('?')[1];
-            console.log(keywords)
-            this.$axios.get(`http://xkolento.cn/search/${keywords}`,{
-                params:{}
-            }).then(res=>{
-                this.searchresult=res.data.subjects.slice(0,5)
-                this.searchcounts=res.data.count
-                this.searchtitle=res.data.title
-                this.load=false
-            }).then(()=>{
-                let scon = this.$refs.scon;
-                let wrapper = this.$refs.wrapper;
-                let scroll1 = new BScroll(wrapper,{
-                    startY:0,
-                    scrollX:false,
-                    scrollY:true,
-                    click:true,
-                    momentum:true,
-                    pullDownRefresh:true
-                })
+            this.$nextTick(()=>{
+                this.searchapi();
             })
-
         },
         methods:{
             moredetail(mid){
                 this.$router.push(`mdetail?mid=${mid}`);
             },
             searchwords(swords){
-                this.load=true
-                this.$axios.get(`http://xkolento.cn/search/${swords}`,{
+                if(swords!=''){
+                    this.load=true
+                    this.$axios.get(`http://xkolento.cn/search/${swords}`,{
+                        params:{}
+                    }).then(res=>{
+                        this.searchresult=res.data.subjects
+                        // if(res.data.subjects.length>5){
+                        //     this.searchresult=res.data.subjects.slice(0,5)
+                        // }else{
+                        //     this.searchresult=res.data.subjects
+                        // }
+                        this.searchcounts=res.data.count
+                        this.searchtitle=res.data.title
+                        this.load=false
+                        this.swords=''
+                    }).then(()=>{
+                        this.scrollapi();
+                    })
+                    
+                }
+            },
+            goindex(){
+                this.$router.push('/');
+            },
+            slicearray(array, size){
+                let result = [];
+                for (let x = 0; x < Math.ceil(array.length / size); x++) {
+                    let start = x * size;
+                    let end = start + size;
+                    result.push(array.slice(start, end));
+                }
+                return result;
+            },
+            searchapi(){
+                let curl = window.location.href;
+                if(curl.indexOf('?')>-1){
+                    this.keywords = curl.split('?')[1];
+                }else{
+                    this.keywords = '动漫'
+                }
+
+                this.$axios.get(`http://xkolento.cn/search/${this.keywords}`,{
                     params:{}
                 }).then(res=>{
-                    if(this.searchresult.length>5){
-                        this.searchresult=res.data.subjects.slice(0,5)
-                    }else{
-                        this.searchresult=res.data.subjects
-                    }
-                    
+                    this.searchresult=res.data.subjects
+                    // this.all=res.data.subjects
+                    // this.resultarray = this.slicearray(this.all, 5)
+                    // if(res.data.subjects.length>5){
+                    //     this.searchresult=this.resultarray[this.length]
+                    // }else{
+                    //     this.searchresult=res.data.subjects
+                    // }
                     this.searchcounts=res.data.count
                     this.searchtitle=res.data.title
                     this.load=false
-                    this.swords=''
+                }).then(()=>{
+                    this.scrollapi();
                 })
+            },
+            scrollapi(){
+                // let content = this.$refs.content;
+                // let wrapper = this.$refs.wrapper;
+                // this.scroll = new BScroll(wrapper,{
+                //     startY:0,
+                //     scrollX:false,
+                //     click:true,
+                //     momentum:true,
+                //     swipeBounceTime:150,
+                //     pullUpLoad: {
+                //         threshold:-30// 在上拉到超过底部 20px 时，触发 pullingUp 事件,
+                //     }
+                // })
+                // this.scroll.on('pullingUp', () => { 
+                //     if(this.resultarray.length>1){
+                //         if(this.length<this.resultarray.length-1){
+                //             this.moreload=true
+                //             setTimeout(()=> {
+                //                 this.length+=1
+                //                 this.searchresult.push(...this.resultarray[this.length])
+                //                 this.moreload=false
+                //                 this.scroll.finishPullUp();
+                //                 this.scroll.refresh()
+                //             }, 500);
+                //         }
+                //     }
+                // })
             }
         },
         components:{
@@ -161,10 +217,13 @@
 </script>
 
 <style scoped>
-    .search-box {padding: 2rem;border-bottom: 1px solid #F2F2F2;box-shadow:0 0 0.3rem rgba(0,0,0,0.2);}
-    .input-box {position: relative;width: 84%;}
+    .search-box {padding: 2rem 2.5%;border-bottom: 1px solid #F2F2F2;box-shadow:0 0 0.3rem rgba(0,0,0,0.2);position: fixed;
+    top: 0;left: 0;width:95%;z-index:700;background: #fff;}
+    .input-box {position: relative;width: 80%;}
     .search {width: 100%;height: 5rem;line-height: 5rem;border-radius:1rem;background: #f5f5f5;border:none;font-size: 2.8rem;color:#333;
     text-align: center;}
+    .search-title {margin-top:7rem;}
+    .result-con {margin-top: 10rem;}
     .cancel {font-size: 2.8rem;color:#e09015;line-height: 5rem;padding-right: 2rem;}
     .search-icon {position: absolute;left: 3.3rem;top: 3.3rem;width: 3rem;}
     .content {padding:2rem;margin-top: 2rem;}
@@ -204,4 +263,5 @@
     background-size: 100%;width: 15rem;height: 3.1rem;}
     .more-loading {height: 15rem;overflow: hidden;margin-top: -5rem;}
     .more-pic {width: 30rem;margin:-5rem auto 0;}
+    /*.wrapper {position: absolute;left: 0;top: 0;width: 100%;height: 100%;}*/
 </style>

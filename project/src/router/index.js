@@ -6,7 +6,7 @@ import movies from '../pages/movies'
 import anime from '../pages/anime'
 import mdetail from '../pages/mdetail'
 import person from '../pages/person'
-import result from '../pages/result'
+import search from '../pages/search'
 
 Vue.use(Router)
 
@@ -43,9 +43,9 @@ export default new Router({
       component: person
     },
     {
-      path: '/result',
-      name: 'result',
-      component: result
+      path: '/search',
+      name: 'search',
+      component: search
     }
   ]
 })

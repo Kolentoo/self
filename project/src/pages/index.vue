@@ -56,7 +56,7 @@
 
 
             let myDate = new Date();
-            let month = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+            let month = myDate.getMonth()+1; //获取当前月份(0-11,0代表1月)
             let day = myDate.getDate(); //获取当前日(1-31)
             this.dateday=month + '月'+ day+'日'
             
