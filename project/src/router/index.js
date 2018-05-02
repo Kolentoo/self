@@ -7,6 +7,7 @@ import anime from '../pages/anime'
 import mdetail from '../pages/mdetail'
 import person from '../pages/person'
 import search from '../pages/search'
+import ranking from '../pages/ranking'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/search',
       name: 'search',
       component: search
+    },
+    {
+      path: '/ranking',
+      name: 'ranking',
+      component: ranking
     }
   ]
 })

@@ -128,32 +128,16 @@
                         params:{}
                     }).then(res=>{
                         this.searchresult=res.data.subjects
-                        // if(res.data.subjects.length>5){
-                        //     this.searchresult=res.data.subjects.slice(0,5)
-                        // }else{
-                        //     this.searchresult=res.data.subjects
-                        // }
                         this.searchcounts=res.data.count
                         this.searchtitle=res.data.title
                         this.load=false
                         this.swords=''
-                    }).then(()=>{
-                        this.scrollapi();
                     })
                     
                 }
             },
             goindex(){
                 this.$router.push('/');
-            },
-            slicearray(array, size){
-                let result = [];
-                for (let x = 0; x < Math.ceil(array.length / size); x++) {
-                    let start = x * size;
-                    let end = start + size;
-                    result.push(array.slice(start, end));
-                }
-                return result;
             },
             searchapi(){
                 let curl = window.location.href;
@@ -167,47 +151,10 @@
                     params:{}
                 }).then(res=>{
                     this.searchresult=res.data.subjects
-                    // this.all=res.data.subjects
-                    // this.resultarray = this.slicearray(this.all, 5)
-                    // if(res.data.subjects.length>5){
-                    //     this.searchresult=this.resultarray[this.length]
-                    // }else{
-                    //     this.searchresult=res.data.subjects
-                    // }
                     this.searchcounts=res.data.count
                     this.searchtitle=res.data.title
                     this.load=false
-                }).then(()=>{
-                    this.scrollapi();
                 })
-            },
-            scrollapi(){
-                // let content = this.$refs.content;
-                // let wrapper = this.$refs.wrapper;
-                // this.scroll = new BScroll(wrapper,{
-                //     startY:0,
-                //     scrollX:false,
-                //     click:true,
-                //     momentum:true,
-                //     swipeBounceTime:150,
-                //     pullUpLoad: {
-                //         threshold:-30// 在上拉到超过底部 20px 时，触发 pullingUp 事件,
-                //     }
-                // })
-                // this.scroll.on('pullingUp', () => { 
-                //     if(this.resultarray.length>1){
-                //         if(this.length<this.resultarray.length-1){
-                //             this.moreload=true
-                //             setTimeout(()=> {
-                //                 this.length+=1
-                //                 this.searchresult.push(...this.resultarray[this.length])
-                //                 this.moreload=false
-                //                 this.scroll.finishPullUp();
-                //                 this.scroll.refresh()
-                //             }, 500);
-                //         }
-                //     }
-                // })
             }
         },
         components:{

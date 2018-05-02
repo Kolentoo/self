@@ -25,10 +25,11 @@
     data() {
       return {
         nums:[
-            {title:'MOVIES',num:'01',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Bonne-Marque-ld.mp4'},
-            {title:'TVPLAY',num:'02',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Involve-Digital-ld.mp4'},
-            {title:'ANIME',num:'03',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Hunter-Farmer-ld.mp4'},
-            {title:'SEARCH',num:'',video:'https://engzell.me/wp-content/uploads/2016/07/Alexander-Engzell-Hunter-Farmer-ld.mp4'}
+            {title:'MOVIES',num:'01'},
+            {title:'TVPLAY',num:'02'},
+            {title:'ANIME',num:'03'},
+            {title:'RANKING',num:'04'},
+            {title:'SEARCH',num:''}
             // {title:'ABOUT ME',num:'04'}
         ],
         swiperon:false,
@@ -92,7 +93,8 @@
     .slide0 {background: url('../public/images/bj16.jpg') no-repeat center center;background-size: cover;}
     .slide1 {background: url('../public/images/bj17.jpg') no-repeat center center;background-size: cover;}
     .slide2 {background: url('../public/images/bj14.jpg') no-repeat center center;background-size: cover;}
-    .slide3 {background: url('../public/images/bj13.jpg') no-repeat center center;background-size: cover;}
+    .slide3 {background: url('../public/images/bj20.jpg') no-repeat center center;background-size: cover;}
+    .slide4 {background: url('../public/images/bj13.jpg') no-repeat center center;background-size: cover;}
     .videobox {width: 100%;position: fixed;top: 0;left: 0;height: 100%;}
     .videobox:-webkit-full-screen {width: 100%;height: 100%;}
     .words {width: 50rem;height: 6rem;line-height: 6rem;border-radius:3rem;font-size: 3.2rem;text-align: center;
