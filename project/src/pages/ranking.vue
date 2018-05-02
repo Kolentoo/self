@@ -2,7 +2,7 @@
     <div class="ranking" ref="ranking">
         <swiper :options="swiperOption" ref="mySwiper" :class="['sbox']">
             <!-- slides -->
-            <swiper-slide ref="slides" :class="['swiper-slide','slide'+idx]" v-for="(item,idx) in subjectbox" :key="idx">
+            <swiper-slide ref="slides" :class="['swiper-slide','slide'+idx]" v-for="(item,idx) in subjectbox" :key="idx" v-if="item.kind_cn!='榜单电影在线观看'">
                 <div class="rankbox">
                     <div class="slidestart" v-if="idx===0">
                         <img class="rankingbj" src="../public/images/ranking.gif" alt="">
@@ -11,8 +11,8 @@
                         <img class="downpic" src="../public/images/down.png" alt="">
                     </div>
                     <div class="slidecon" v-if="idx>0">
-                        <img class="imgbj" :src="'https://images.weserv.nl/?url='+item.payload.mobile_background_img.substring(7)" alt="">
-                        <div class="titlebox">
+                        <img class="imgbj" :src="item.payload.mobile_background_img?'https://images.weserv.nl/?url='+item.payload.mobile_background_img.substring(7):''" alt="">
+                        <div class="titlebox" v-if="item.kind_cn==='Top 10'">
                             <p class="p1">{{item.payload.title}}</p>
                             <p class="p2"><em>TOP1</em>{{item.subject.title}}</p>
                             <div class="scorebox">
@@ -51,9 +51,14 @@
                             </div>
                             <p class="desc">{{item.payload.description}}</p>
                         </div>
-                        <moviesubject :item="item.subjects"></moviesubject>
+                        <moviesubject :item="item.subjects" v-if="item.kind_cn==='Top 10'"></moviesubject>
                     </div>
-                    
+                </div>
+                <div class="lines" v-if="item.kind_cn==='台词'">
+                    <p class="linetext">
+                        {{item.payload.text}}
+                        <em>——《{{item.subject.title}}》</em>
+                    </p>
                 </div>
                 
                 
@@ -98,7 +103,12 @@
                 swiperOption: {
                     direction: 'vertical',
                     mousewheel: true,
-                    height: window.innerHeight
+                    height: window.innerHeight,
+                    on: {
+                        slideChangeTransitionEnd: ()=>{
+                            this.newmsg();
+                        }
+                    }
                 },
                 page:1
             }
@@ -117,6 +127,8 @@
 
                 }).then((res)=>{
                     this.subjectbox.push(res.data.res)
+                    this.page+=1
+                    console.log(this.page)
                 })
             }
         },
@@ -169,4 +181,7 @@
     .ranking .star0 {background: url('../public/images/stars.png') no-repeat 0 -30rem;
     background-size: 100%;width: 15rem;height: 3.1rem;}
     .subject {position: absolute;width: 100%;bottom: 1.5rem;left: 0;z-index:500;}
+    .lines {background: rgba(0,0,0,0.7);height: 24rem;text-align: center;position: absolute;width: 100%;bottom: 0;left: 0;color:#fff;
+    font-size: 3rem;z-index:200;display: flex;align-items: center;justify-content: center;}
+    .lines em{margin-top: 1.5rem;display: inline-block;font-size: 2.6rem;}
 </style>
