@@ -16,7 +16,7 @@
 
 <style scoped>
   .fade-enter{opacity:0;}
-  .fade-enter-active{transition:all 0.4s;}
-  .fade-leave-active{transition:all 0.4s;}
+  .fade-enter-active{transition:all 0.3s;}
+  .fade-leave-active{transition:all 0.3s;}
   .fade-leave-to{transform:translateX(100%);}
 </style>

@@ -16,6 +16,6 @@
 
 <style>
     .loading {position: fixed;z-index:600;background: #fff;top: 0;left: 0;transition:all ease 0.7s;width: 100%;height: 100%;
-    display: flex;justify-content: center;align-items: center;}
+    display: flex;justify-content: center;align-items: center;transition:all ease 0.5s;}
     .loading img{width: 30rem;}
 </style>

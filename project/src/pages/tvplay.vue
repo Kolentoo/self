@@ -6,10 +6,19 @@
                 <p class="mtitle">电视剧</p>
                 <img class="share opacity" src="../public/images/share.png" alt="">
             </div>
-            <div class="wrapper" ref="wrapper">
-                <ul class="nav content" ref="content">
-                    <li ref="navlist" :class="['nav-list',{liston:self.liston}]" @click="tab(idx)" v-for="(self,idx) in types" :key="idx">{{self.name}}</li>
-                </ul>
+            <div class="wrapper">
+                <swiper :options="swiperOption" ref="mySwiper" :class="['sbox']">
+                    <!-- slides -->
+                    <swiper-slide ref="slides" :class="['swiper-slide nav content','slide'+idx]" v-for="(self,idx) in types" :key="idx">
+                        <div ref="navlist" :class="['nav-list',{liston:self.liston}]" @click="tab(idx)"  :key="idx">{{self.name}}</div>
+                    </swiper-slide>
+                    <!-- Optional controls -->
+                    <div class="swiper-pagination"  slot="pagination"></div>
+                    <div class="swiper-button-prev hide" slot="button-prev"></div>
+                    <div class="swiper-button-next hide" slot="button-next"></div>
+                    <div class="swiper-scrollbar hide" slot="scrollbar"></div>
+                </swiper>
+
             </div>
         </div>
         <div class="hot tvcon" v-if="tabstatus===0">
@@ -170,7 +179,13 @@
                 hongkongnice:'',
                 varietynew:'',
                 varietyhot:'',
-                varietynice:''
+                varietynice:'',
+                swiperOption: {
+                    freeMode:true,
+                    slidesPerView: 6,
+                    slidesPerGroup: 6,
+                    spaceBetween: 10
+                }
             }
         },
         created(){
@@ -211,18 +226,6 @@
                 }
             }
 
-        },
-        mounted(){
-            let content = this.$refs.content;
-            let wrapper = this.$refs.wrapper;
-            content.style.width=12*8+'rem'
-            let scroll = new BScroll(wrapper,{
-                startX:0,
-                scrollX:true,
-                scrollY:false,
-                momentum:false,
-                click:true
-            })
         },
         methods:{
             tab(idx){

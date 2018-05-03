@@ -1,5 +1,5 @@
 <template>
-    <div class="menu">
+    <div class="menu hide">
         <ul class="menu-con">
             <li class="mlist opacity"><a href="https://m.weibo.cn/p/1005051921492471">Kolento</a></li>
             <li class="mlist">

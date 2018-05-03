@@ -67,7 +67,7 @@
                 this.banneroff=true
             }else{
                 let hours = myDate.getHours();
-                if(hours>=6&&hours<11){
+                if(hours>=6&&hours<12){
                     this.tips='早安，加油'
                 }else if(hours <16&&hours>=12){
                     this.tips='喝杯咖啡，休息一下'

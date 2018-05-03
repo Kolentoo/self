@@ -23,7 +23,7 @@
                 <p class="othername normal">别名：<em v-for="(item,idx) in detail.aka" :key="idx">{{item}}</em></p>
             </div>
             <div class="evaluate">
-                <p class="p1">豆瓣评分</p>
+                <p class="p1">评分</p>
                 <p class="score b">{{detail.rating.average}}</p>
                 <div v-if="detail.rating.average >= 9">
                     <div class="star10"></div>
@@ -66,26 +66,36 @@
         </div>
         <div class="actor" v-if="detail.casts.length!=0">
             <h2>演员</h2>
-            <div class="wrapper" ref="wrapper1">
-                <ul class="actor-con clearfix content" ref="content1">
-                    <li class="actor-list fl" v-for="(item,idx) in detail.casts" :key="idx" @click="persondetail(item.id)">
-                        <img class="actor-pic vm" v-if="item.avatars-0!=0" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
-                        <img class="actor-pic vm" v-if="item.avatars-0===0" src="../public/images/K.jpg" alt="">
-                        <p class="actor-name">{{item.name}}</p>
-                    </li>
-                </ul>
+            <div class="wrapper">
+                <swiper :options="swiperOption" ref="mySwiper" v-if="detail.casts">
+                    <!-- slides -->
+                    <swiper-slide ref="slides" class="swiper-slide actor-con clearfix" v-for="(item,idx) in detail.casts" :key="idx">
+                        <div class="actor-list fl"  @click="persondetail(item.id)">
+                            <img class="actor-pic vm" v-if="item.avatars-0!=0" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
+                            <img class="actor-pic vm" v-if="item.avatars-0===0" src="../public/images/K.jpg" alt="">
+                            <p class="actor-name">{{item.name}}</p>
+                        </div>
+                    </swiper-slide>
+                    <!-- Optional controls -->
+                    <div class="swiper-pagination"  slot="pagination"></div>
+                    <div class="swiper-button-prev hide" slot="button-prev"></div>
+                    <div class="swiper-button-next hide" slot="button-next"></div>
+                    <div class="swiper-scrollbar hide" slot="scrollbar"></div>
+                </swiper>
             </div>
         </div>
         <div class="actor" v-if="detail.directors.length!=0">
             <h2>导演</h2>
-            <div class="wrapper" ref="wrapper2">
-                <ul class="actor-con clearfix content" ref="content2">
-                    <li class="actor-list fl" v-for="(item,idx) in detail.directors" :key="idx" @click="persondetail(item.id)">
-                        <img class="actor-pic vm" v-if="item.avatars-0!=0" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
-                        <img class="actor-pic vm" v-if="item.avatars-0===0" src="../public/images/K.jpg" alt="">
-                        <p class="actor-name">{{item.name}}</p>
-                    </li>
-                </ul>
+            <div class="wrapper">
+                <swiper :options="swiperOption" ref="mySwiper" v-if="detail.directors">
+                    <swiper-slide ref="slides" class="swiper-slide actor-con clearfix" v-for="(item,idx) in detail.directors" :key="idx">
+                        <div class="actor-list fl"  @click="persondetail(item.id)">
+                            <img class="actor-pic vm" v-if="item.avatars-0!=0" :src="'https://images.weserv.nl/?url='+item.avatars.small.substring(7)" alt="">
+                            <img class="actor-pic vm" v-if="item.avatars-0===0" src="../public/images/K.jpg" alt="">
+                            <p class="actor-name">{{item.name}}</p>
+                        </div>
+                    </swiper-slide>
+                </swiper>
             </div>
         </div>
         <loading v-if="load"></loading>
@@ -118,11 +128,15 @@
 
                     ]
                 },
-                scroll1:'',
-                scroll2:'', 
                 load:true,
                 popmsg:'',
-                popshow:false
+                popshow:false,
+                swiperOption: {
+                    freeMode:true,
+                    slidesPerView: 3,
+                    slidesPerGroup: 3,
+                    spaceBetween: 20
+                }
             }
         },
         created(){
@@ -142,32 +156,12 @@
                 }).then(()=>{
                     let clength = this.detail.casts.length;
                     if(this.detail.casts.length!=0){
-                        let content1 = this.$refs.content1;
-                        let wrapper1 = this.$refs.wrapper1;
-                        content1.style.width=25*clength+'rem'
-                        this.scroll1 = new BScroll(wrapper1,{
-                            startX:0,
-                            scrollX:true,
-                            scrollY:false,
-                            momentum:true,
-                            swipeTime:1000,
-                            swipeBounceTime:200,
-                            click:true
-                        })
                         
                     }
 
                     if(this.detail.directors.length!=0){
-                        let content2 = this.$refs.content2;
-                        let wrapper2 = this.$refs.wrapper2;
-                        content2.style.width=25*clength+'rem'
-                        this.scroll2 = new BScroll(wrapper2,{
-                            startX:0,
-                            scrollX:true,
-                            scrollY:false,
-                            momentum:false,
-                            click:true
-                        })
+
+
                     }
                 })
             })
