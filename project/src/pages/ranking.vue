@@ -182,7 +182,7 @@
         methods:{
             newmsg(){
                 if(this.page<90){
-                    this.$axios.get(`http://xkolento.cn/2017/${this.page}`,{
+                    this.$axios.get(`https://xkolento.cn/2017/${this.page}`,{
 
                     }).then((res)=>{
                         this.subjectbox.push(res.data.res)
