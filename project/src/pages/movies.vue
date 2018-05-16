@@ -266,7 +266,7 @@
                 window.history.go(-1);
             },
             nowapi(){
-                this.$axios.get(`http://xkolento.cn/v2/movie/in_theaters`,{
+                this.$axios.get(`https://xkolento.cn/v2/movie/in_theaters`,{
                     params:{}
                 }).then(res=>{
                     this.now=res.data.subjects;
@@ -275,7 +275,7 @@
                 })
             },
             comingapi(){
-                this.$axios.get(`http://xkolento.cn/v2/movie/coming_soon`,{
+                this.$axios.get(`https://xkolento.cn/v2/movie/coming_soon`,{
                     params:{}
                 }).then(res=>{
                     this.comeing=res.data.subjects;
@@ -284,7 +284,7 @@
                 })
             },
             topapi(){
-                this.$axios.get(`http://xkolento.cn/v2/movie/top250`,{
+                this.$axios.get(`https://xkolento.cn/v2/movie/top250`,{
                     params:{}
                 }).then(res=>{
                     this.ranking=res.data.subjects;
@@ -294,7 +294,7 @@
                 })
             },
             toplistapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_list`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_list`,{
                     params:{}
                 }).then(res=>{
                     this.anime=res.data;
@@ -303,7 +303,7 @@
                 })
             },
             topstoryapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_story`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_story`,{
                     params:{}
                 }).then(res=>{
                     this.story=res.data;
@@ -312,7 +312,7 @@
                 })
             },
             tophappyapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_happy`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_happy`,{
                     params:{}
                 }).then(res=>{
                     this.happy=res.data;
@@ -321,7 +321,7 @@
                 })
             },
             topactapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_act`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_act`,{
                     params:{}
                 }).then(res=>{
                     this.act=res.data;
@@ -330,7 +330,7 @@
                 })
             },
             toploveapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_love`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_love`,{
                     params:{}
                 }).then(res=>{
                     this.love=res.data;
@@ -339,7 +339,7 @@
                 })
             },
             topscientistapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_scientist`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_scientist`,{
                     params:{}
                 }).then(res=>{
                     this.scientist=res.data;
@@ -348,7 +348,7 @@
                 })
             },
             topscareapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_scare`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_scare`,{
                     params:{}
                 }).then(res=>{
                     this.scare=res.data;
@@ -357,7 +357,7 @@
                 })
             },
             tophorrorapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_horror`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_horror`,{
                     params:{}
                 }).then(res=>{
                     this.horror=res.data;
@@ -366,7 +366,7 @@
                 })
             },
             topdisasterapi(){
-                this.$axios.get(`http://xkolento.cn/chart/top_disaster`,{
+                this.$axios.get(`https://xkolento.cn/chart/top_disaster`,{
                     params:{}
                 }).then(res=>{
                     this.disaster=res.data;

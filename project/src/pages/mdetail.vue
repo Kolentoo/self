@@ -146,7 +146,7 @@
             let detailgroup = localStorage.getItem(mid);
             
             this.$nextTick(()=>{
-                this.$axios.get(`http://xkolento.cn/v2/movie/subject/${mid}`,{
+                this.$axios.get(`https://xkolento.cn/v2/movie/subject/${mid}`,{
 
                 }).then(res=>{
                     this.detail=res.data;
@@ -155,14 +155,6 @@
                     this.load=false
                 }).then(()=>{
                     let clength = this.detail.casts.length;
-                    if(this.detail.casts.length!=0){
-                        
-                    }
-
-                    if(this.detail.directors.length!=0){
-
-
-                    }
                 })
             })
 

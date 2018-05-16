@@ -491,7 +491,7 @@
                 window.history.go(-1);
             },
             hotnewapi(){
-                this.$axios.get(`http://xkolento.cn/hottv/new`,{
+                this.$axios.get(`https://xkolento.cn/hottv/new`,{
                     params:{}
                 }).then(res=>{
                     this.hotnew=res.data.subjects;
@@ -500,7 +500,7 @@
                 })
             },
             hothotapi(){
-                this.$axios.get(`http://xkolento.cn/hottv/hot`,{
+                this.$axios.get(`https://xkolento.cn/hottv/hot`,{
                     params:{}
                 }).then(res=>{
                     this.hothot=res.data.subjects;
@@ -509,7 +509,7 @@
                 })
             },
             hotniceapi(){
-                this.$axios.get(`http://xkolento.cn/hottv/nice`,{
+                this.$axios.get(`https://xkolento.cn/hottv/nice`,{
                     params:{}
                 }).then(res=>{
                     this.hotnice=res.data.subjects;
@@ -519,7 +519,7 @@
                 })
             },
             americanewapi(){
-                this.$axios.get(`http://xkolento.cn/america/new`,{
+                this.$axios.get(`https://xkolento.cn/america/new`,{
                     params:{}
                 }).then(res=>{
                     this.americanew=res.data.subjects;
@@ -528,7 +528,7 @@
                 })
             },
             americahotapi(){
-                this.$axios.get(`http://xkolento.cn/america/hot`,{
+                this.$axios.get(`https://xkolento.cn/america/hot`,{
                     params:{}
                 }).then(res=>{
                     this.americahot=res.data.subjects;
@@ -537,7 +537,7 @@
                 })
             },
             americaniceapi(){
-                this.$axios.get(`http://xkolento.cn/america/nice`,{
+                this.$axios.get(`https://xkolento.cn/america/nice`,{
                     params:{}
                 }).then(res=>{
                     this.americanice=res.data.subjects;
@@ -547,7 +547,7 @@
                 })
             },
             englandnewapi(){
-                this.$axios.get(`http://xkolento.cn/england/new`,{
+                this.$axios.get(`https://xkolento.cn/england/new`,{
                     params:{}
                 }).then(res=>{
                     this.englandnew=res.data.subjects;
@@ -556,7 +556,7 @@
                 })
             },
             englandhotapi(){
-                this.$axios.get(`http://xkolento.cn/england/hot`,{
+                this.$axios.get(`https://xkolento.cn/england/hot`,{
                     params:{}
                 }).then(res=>{
                     this.englandhot=res.data.subjects;
@@ -565,7 +565,7 @@
                 })
             },
             englandniceapi(){
-                this.$axios.get(`http://xkolento.cn/england/nice`,{
+                this.$axios.get(`https://xkolento.cn/england/nice`,{
                     params:{}
                 }).then(res=>{
                     this.englandnice=res.data.subjects;
@@ -575,7 +575,7 @@
                 })
             },
             koreanewapi(){
-                this.$axios.get(`http://xkolento.cn/korea/new`,{
+                this.$axios.get(`https://xkolento.cn/korea/new`,{
                     params:{}
                 }).then(res=>{
                     this.koreanew=res.data.subjects;
@@ -584,7 +584,7 @@
                 })
             },
             koreahotapi(){
-                this.$axios.get(`http://xkolento.cn/korea/hot`,{
+                this.$axios.get(`https://xkolento.cn/korea/hot`,{
                     params:{}
                 }).then(res=>{
                     this.koreahot=res.data.subjects;
@@ -593,7 +593,7 @@
                 })
             },
             koreaniceapi(){
-                this.$axios.get(`http://xkolento.cn/korea/nice`,{
+                this.$axios.get(`https://xkolento.cn/korea/nice`,{
                     params:{}
                 }).then(res=>{
                     this.koreanice=res.data.subjects;
@@ -603,7 +603,7 @@
                 })
             },
             japannewapi(){
-                this.$axios.get(`http://xkolento.cn/japan/new`,{
+                this.$axios.get(`https://xkolento.cn/japan/new`,{
                     params:{}
                 }).then(res=>{
                     this.japannew=res.data.subjects;
@@ -612,7 +612,7 @@
                 })
             },
             japanhotapi(){
-                this.$axios.get(`http://xkolento.cn/japan/hot`,{
+                this.$axios.get(`https://xkolento.cn/japan/hot`,{
                     params:{}
                 }).then(res=>{
                     this.japanhot=res.data.subjects;
@@ -621,7 +621,7 @@
                 })
             },
             japanniceapi(){
-                this.$axios.get(`http://xkolento.cn/japan/nice`,{
+                this.$axios.get(`https://xkolento.cn/japan/nice`,{
                     params:{}
                 }).then(res=>{
                     this.japannice=res.data.subjects;
@@ -631,7 +631,7 @@
                 })
             },
             chinanewapi(){
-                this.$axios.get(`http://xkolento.cn/china/new`,{
+                this.$axios.get(`https://xkolento.cn/china/new`,{
                     params:{}
                 }).then(res=>{
                     this.chinanew=res.data.subjects;
@@ -640,7 +640,7 @@
                 })
             },
             chinahotapi(){
-                this.$axios.get(`http://xkolento.cn/china/hot`,{
+                this.$axios.get(`https://xkolento.cn/china/hot`,{
                     params:{}
                 }).then(res=>{
                     this.chinahot=res.data.subjects;
@@ -649,7 +649,7 @@
                 })
             },
             chinaniceapi(){
-                this.$axios.get(`http://xkolento.cn/japan/nice`,{
+                this.$axios.get(`https://xkolento.cn/japan/nice`,{
                     params:{}
                 }).then(res=>{
                     this.japannice=res.data.subjects;
@@ -659,7 +659,7 @@
                 })
             },
             hongkongnewapi(){
-                this.$axios.get(`http://xkolento.cn/hongkong/new`,{
+                this.$axios.get(`https://xkolento.cn/hongkong/new`,{
                     params:{}
                 }).then(res=>{
                     this.hongkongnew=res.data.subjects;
@@ -668,7 +668,7 @@
                 })
             },
             hongkonghotapi(){
-                this.$axios.get(`http://xkolento.cn/hongkong/hot`,{
+                this.$axios.get(`https://xkolento.cn/hongkong/hot`,{
                     params:{}
                 }).then(res=>{
                     this.hongkonghot=res.data.subjects;
@@ -677,7 +677,7 @@
                 })
             },
             hongkongniceapi(){
-                this.$axios.get(`http://xkolento.cn/hongkong/nice`,{
+                this.$axios.get(`https://xkolento.cn/hongkong/nice`,{
                     params:{}
                 }).then(res=>{
                     this.hongkongnice=res.data.subjects;
@@ -687,7 +687,7 @@
                 })
             },
             varietynewapi(){
-                this.$axios.get(`http://xkolento.cn/variety/new`,{
+                this.$axios.get(`https://xkolento.cn/variety/new`,{
                     params:{}
                 }).then(res=>{
                     this.varietynew=res.data.subjects;
@@ -696,7 +696,7 @@
                 })
             },
             varietyhotapi(){
-                this.$axios.get(`http://xkolento.cn/variety/hot`,{
+                this.$axios.get(`https://xkolento.cn/variety/hot`,{
                     params:{}
                 }).then(res=>{
                     this.varietyhot=res.data.subjects;
@@ -705,7 +705,7 @@
                 })
             },
             varietyniceapi(){
-                this.$axios.get(`http://xkolento.cn/variety/nice`,{
+                this.$axios.get(`https://xkolento.cn/variety/nice`,{
                     params:{}
                 }).then(res=>{
                     this.varietynice=res.data.subjects;

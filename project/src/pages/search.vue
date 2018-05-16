@@ -124,7 +124,7 @@
             searchwords(swords){
                 if(swords!=''){
                     this.load=true
-                    this.$axios.get(`http://xkolento.cn/search/${swords}`,{
+                    this.$axios.get(`https://xkolento.cn/search/${swords}`,{
                         params:{}
                     }).then(res=>{
                         this.searchresult=res.data.subjects
@@ -147,7 +147,7 @@
                     this.keywords = '动漫'
                 }
 
-                this.$axios.get(`http://xkolento.cn/search/${this.keywords}`,{
+                this.$axios.get(`https://xkolento.cn/search/${this.keywords}`,{
                     params:{}
                 }).then(res=>{
                     this.searchresult=res.data.subjects

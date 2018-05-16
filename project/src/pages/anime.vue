@@ -81,7 +81,7 @@
                 window.history.go(-1);
             },
             animenewapi(){
-                this.$axios.get(`http://xkolento.cn/anime/new`,{
+                this.$axios.get(`https://xkolento.cn/anime/new`,{
                     params:{}
                 }).then(res=>{
                     this.animenew=res.data.subjects;
@@ -90,7 +90,7 @@
                 })
             },
             animehotapi(){
-                this.$axios.get(`http://xkolento.cn/anime/hot`,{
+                this.$axios.get(`https://xkolento.cn/anime/hot`,{
                     params:{}
                 }).then(res=>{
                     this.animehot=res.data.subjects;
@@ -99,7 +99,7 @@
                 })
             },
             animeniceapi(){
-                this.$axios.get(`http://xkolento.cn/anime/nice`,{
+                this.$axios.get(`https://xkolento.cn/anime/nice`,{
                     params:{}
                 }).then(res=>{
                     this.animenice=res.data.subjects;

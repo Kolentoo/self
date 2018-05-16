@@ -116,7 +116,7 @@
         created(){
             let curl = window.location.href;
             let pid = curl.split('?')[1];
-            this.$axios.get(`http://xkolento.cn/movie/person/${pid}`,{
+            this.$axios.get(`https://xkolento.cn/movie/person/${pid}`,{
 
             }).then(res=>{
                 this.info=res.data;
